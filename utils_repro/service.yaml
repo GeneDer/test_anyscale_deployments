@@ -1,6 +1,6 @@
 name: "test-utils-service2"
 cluster_env: test-utils-env
 ray_serve_config:
-  import_path: utils_repo.hello_service:model
+  import_path: utils_repro.hello_serve:model
   runtime_env:
     working_dir: "https://github.com/GeneDer/test_anyscale_deployments/archive/refs/heads/main.zip"
