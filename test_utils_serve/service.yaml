@@ -1,6 +1,6 @@
 name: "test-utils-service"
 cluster_env: test-utils-env
 ray_serve_config:
-  import_path: test:build_app
+  import_path: test_utils_serve.test:build_app
   runtime_env:
-    working_dir: "https://drive.google.com/uc?id=19kuA8aaNczDdev3Jyv5QQtJozgePSoUD&export=download"
+    working_dir: "https://github.com/GeneDer/test_anyscale_deployments/archive/refs/heads/main.zip"

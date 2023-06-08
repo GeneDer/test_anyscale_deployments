@@ -1,0 +1,7 @@
+runtime_env: {}
+
+import_path: hello_serve:model
+
+host: 127.0.0.1
+
+port: 8000

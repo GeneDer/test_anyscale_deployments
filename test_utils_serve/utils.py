@@ -1,5 +1,4 @@
-import time
+import importlib
+module = importlib.import_module("ingress_dag")
 
-
-def foo():
-    return f"bar: {time.time()}"
+print(module)
