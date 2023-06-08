@@ -1,0 +1,1 @@
+base_image: anyscale/ray:2.5.0-py39
