@@ -1,3 +1,4 @@
+import time
 from ray import serve
 from starlette.requests import Request
 
@@ -11,7 +12,7 @@ class HelloModel:
 
     async def __call__(self, starlette_request: Request) -> None:
         hello()
-        return 
+        return f"{hello()}, {time.time()}"
 
 
 model = HelloModel.bind()

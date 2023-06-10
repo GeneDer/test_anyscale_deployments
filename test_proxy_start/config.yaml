@@ -1,0 +1,4 @@
+applications:
+  - name: app1
+    import_path: test:build_app
+    route_prefix: /backend
