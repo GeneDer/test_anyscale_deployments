@@ -1,4 +1,4 @@
 def hello():
-    text = "hello2"
+    text = "hello_from_utils2"
     print(text)
     return text

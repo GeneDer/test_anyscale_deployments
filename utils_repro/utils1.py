@@ -45,7 +45,20 @@ def import_attr(full_path: str):
     return getattr(module, attr_name)
 
 
-print(import_attr(full_path="hello_serve:model"))
+# print(import_attr(full_path="hello_serve:model"))
+
+import sys
+import os
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+sys.path.insert(0, 'utils')
+
+import test
+
+# Import the module.
+hello = test.hello
+
 
 module = importlib.import_module("hello_serve")
 print(module)
