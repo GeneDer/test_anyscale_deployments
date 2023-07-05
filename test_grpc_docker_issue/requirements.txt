@@ -1,0 +1,10 @@
+gymnasium==0.26.3
+numpy==1.24.3
+pandas==2.0.2
+ray[data,rllib,serve] @ https://s3-us-west-2.amazonaws.com/ray-wheels/latest/ray-3.0.0.dev0-cp310-cp310-manylinux2014_x86_64.whl
+torch==2.0.1
+starlette==0.27.0
+dm-tree==0.1.8
+azureml-mlflow
+azureml-defaults
+
