@@ -1,0 +1,10 @@
+services:
+  ray:
+    build: .
+    networks:
+      - default
+    ports:
+      - 8000:8000
+      - 8265:8265
+    volumes:
+      - ../../ray:.
