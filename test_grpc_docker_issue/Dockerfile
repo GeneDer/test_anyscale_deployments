@@ -10,11 +10,11 @@ RUN apt-get update && \
 WORKDIR /src
 
 COPY requirements.txt /src
-RUN pip3 install -r requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
 COPY . /src
 
 WORKDIR /src
 
-CMD ["serve", "run", "-h", "0.0.0.0", "serve_agent:agent"]
-
+CMD ["serve", "run", "--host", "0.0.0.0", "serve_agent:agent"]

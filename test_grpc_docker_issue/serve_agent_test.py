@@ -1,10 +1,29 @@
+import ray
 import ray.rllib.algorithms.ppo as ppo
-from pathlib import Path
 from ray import serve
+
+
+def train_ppo_model():
+    # Configure our PPO algorithm.
+    config = (
+        ppo.PPOConfig()
+        .environment("CartPole-v1")
+        .framework("torch")
+        .rollouts(num_rollout_workers=0)
+    )
+    # Create a `PPO` instance from the config.
+    algo = config.build()
+    # Train for one iteration.
+    algo.train()
+    # Save state of the trained Algorithm in a checkpoint.
+    checkpoint_dir = algo.save("/tmp/rllib_checkpoint")
+    return checkpoint_dir
+
+
+checkpoint_path = train_ppo_model()
+
 from starlette.requests import Request
 
-folder_path = "checkpoint_000001"
-PATH_TO_CHECKPOINT = Path(__file__).absolute().parent / "rllib_checkpoint" / folder_path
 
 @serve.deployment
 class ServePPOModel:
@@ -26,5 +45,5 @@ class ServePPOModel:
         return {"action": int(action)}
 
 
-agent = ServePPOModel.bind(PATH_TO_CHECKPOINT)
-serve.run(agent)
+ppo_model = ServePPOModel.bind(checkpoint_path)
+serve.run(ppo_model)

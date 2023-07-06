@@ -1,0 +1,1 @@
+{"type": "Algorithm", "checkpoint_version": "1.2", "format": "cloudpickle", "state_file": "/tmp/rllib_checkpoint/checkpoint_000001/algorithm_state.pkl", "policy_ids": ["default_policy"], "ray_version": "3.0.0.dev0", "ray_commit": "fc7e92664730ad7d79e5b292cca628d525cf33b7"}
