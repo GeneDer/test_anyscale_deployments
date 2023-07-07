@@ -17,4 +17,6 @@ COPY . /src
 
 WORKDIR /src
 
-CMD ["serve", "run", "--host", "0.0.0.0", "serve_agent:agent"]
+# CMD [ "ray", "start", "--head", "--port=6379", "--redis-shard-ports=6380,6381", "--object-manager-port=22345","--node-manager-port=22346","--dashboard-host=0.0.0.0","--block"]
+# ENTRYPOINT ["serve", "start", "--http-host", "0.0.0.0"] # this doesn't start a ray cluster
+ENTRYPOINT ["serve", "run", "--host", "0.0.0.0", "serve_agent:agent"]

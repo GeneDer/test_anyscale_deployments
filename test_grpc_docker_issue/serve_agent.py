@@ -27,4 +27,4 @@ class ServePPOModel:
 
 
 agent = ServePPOModel.bind(PATH_TO_CHECKPOINT)
-serve.run(agent)
+# serve.run(agent)
