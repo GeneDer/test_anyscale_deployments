@@ -29,22 +29,6 @@ g = GrpcDeployment.options(name="grpc-deployment").bind()
 
 
 @serve.deployment
-class GrpcDeploymentNoProto:
-    def __call__(self, my_input: bytes) -> bytes:
-        request = pickle.loads(my_input)
-        greeting = f"Hello {request['name']} from {request['foo']}"
-        num_x2 = request["num"] * 2
-        output = {
-            "greeting": greeting,
-            "num_x2": num_x2,
-        }
-        return pickle.dumps(output)
-
-
-g2 = GrpcDeploymentNoProto.options(name="grpc-deployment-no-proto").bind()
-
-
-@serve.deployment
 class GrpcDeploymentStreamingResponse:
     def __call__(self, my_input: bytes) -> Generator[bytes, None, None]:
         print("my_input", my_input)
@@ -119,6 +103,21 @@ apple_stand = AppleStand.bind()
 g4 = FruitMarket.options(name="grpc-deployment-multi-app").bind(
     orange_stand, apple_stand
 )
+
+
+@serve.deployment
+class GrpcDeploymentMultiplexing:
+    @serve.multiplexed(max_num_models_per_replica=3)
+    async def get_model(self, model_id: str) -> str:
+        return f"loading model: {model_id}"
+
+    async def __call__(self, request: bytes) -> bytes:
+        model_id = serve.get_multiplexed_model_id()
+        model = await self.get_model(model_id)
+        return model.encode("utf-8")
+
+
+g5 = GrpcDeploymentMultiplexing.options(name="grpc-deployment-multiplexing").bind()
 
 
 @serve.deployment
