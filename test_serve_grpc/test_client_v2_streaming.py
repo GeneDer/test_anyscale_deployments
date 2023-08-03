@@ -19,14 +19,17 @@ test_in = UserDefinedMessage(
 )
 metadata = (
     ("route_path", "/"),
-    ("method_name", "method1"),
+    ("method_name", "streaming"),
     # ("application", "default_grpc-deployment"),
     # ("request_id", "123"),  # Optional, feature parity w/ http proxy
     # ("multiplexed_model_id", "456"),  # Optional, feature parity w/ http proxy
 )
-response, call = stub.Predict.with_call(request=test_in, metadata=metadata)
-print(call.trailing_metadata())  # Request id is returned in the trailing metadata
-print("Output type:", type(response))  # Response is a type of UserDefinedResponse
-print("Full output:", response)
-print("Output greeting field:", response.greeting)
-print("Output num_x2 field:", response.num_x2)
+
+responses = stub.PredictStreaming(test_in, metadata=metadata)
+
+for response in responses:
+    print("Output type:", type(response))  # Response is a type of UserDefinedResponse
+    print("Full output:", response)
+    print("Output greeting field:", response.greeting)
+    print("Output num_x2 field:", response.num_x2)
+print(responses.trailing_metadata())  # Request id is returned in the trailing metadata

@@ -1,28 +1,49 @@
-import pickle
-import struct
 import time
-from typing import Dict, Generator
+from typing import Generator
 
-from starlette.requests import Request
+from user_defined_protos_pb2 import UserDefinedMessage, UserDefinedResponse
 
-import ray
 from ray import serve
-from ray.serve.generated import serve_pb2
-from ray.serve.handle import RayServeDeploymentHandle
 
 
 @serve.deployment
 class GrpcDeployment:
-    def __call__(self, my_input: bytes) -> bytes:
-        request = serve_pb2.TestIn()
-        request.ParseFromString(my_input)
-        greeting = f"Hello {request.name} from {request.foo}"
-        num_x2 = request.num * 2
-        output = serve_pb2.TestOut(
+    def __call__(self, user_message: UserDefinedMessage) -> UserDefinedResponse:
+        greeting = f"Hello {user_message.name} from {user_message.foo}"
+        num_x2 = user_message.num * 2
+        user_response = UserDefinedResponse(
             greeting=greeting,
             num_x2=num_x2,
         )
-        return output.SerializeToString()
+        return user_response
+
+    def method1(self, user_message: UserDefinedMessage) -> UserDefinedResponse:
+        greeting = f"Hello {user_message.foo} from method1"
+        num_x2 = user_message.num * 3
+        user_response = UserDefinedResponse(
+            greeting=greeting,
+            num_x2=num_x2,
+        )
+        return user_response
+
+    def method2(self, user_message: UserDefinedMessage) -> UserDefinedResponse:
+        greeting = "This is from method2"
+        user_response = UserDefinedResponse(greeting=greeting)
+        return user_response
+
+    def streaming(
+            self, user_message: UserDefinedMessage
+    ) -> Generator[UserDefinedResponse, None, None]:
+        for i in range(10):
+            greeting = f"{i}: Hello {user_message.name} from {user_message.foo}"
+            num_x2 = user_message.num * 2 + i
+            user_response = UserDefinedResponse(
+                greeting=greeting,
+                num_x2=num_x2,
+            )
+            yield user_response
+
+            time.sleep(0.1)
 
 
 g = GrpcDeployment.options(name="grpc-deployment").bind()
