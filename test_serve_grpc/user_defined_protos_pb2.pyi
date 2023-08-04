@@ -4,6 +4,22 @@ from typing import ClassVar as _ClassVar, Optional as _Optional
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
+class FruitAmounts(_message.Message):
+    __slots__ = ["apple", "banana", "orange"]
+    APPLE_FIELD_NUMBER: _ClassVar[int]
+    BANANA_FIELD_NUMBER: _ClassVar[int]
+    ORANGE_FIELD_NUMBER: _ClassVar[int]
+    apple: int
+    banana: int
+    orange: int
+    def __init__(self, orange: _Optional[int] = ..., apple: _Optional[int] = ..., banana: _Optional[int] = ...) -> None: ...
+
+class FruitCosts(_message.Message):
+    __slots__ = ["costs"]
+    COSTS_FIELD_NUMBER: _ClassVar[int]
+    costs: float
+    def __init__(self, costs: _Optional[float] = ...) -> None: ...
+
 class UserDefinedMessage(_message.Message):
     __slots__ = ["foo", "name", "num"]
     FOO_FIELD_NUMBER: _ClassVar[int]

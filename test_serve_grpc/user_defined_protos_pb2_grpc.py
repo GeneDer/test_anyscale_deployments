@@ -2,3 +2,98 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
+import user_defined_protos_pb2 as user__defined__protos__pb2
+
+
+class UserDefinedServiceStub(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.Method1 = channel.unary_unary(
+                '/userdefinedprotos.UserDefinedService/Method1',
+                request_serializer=user__defined__protos__pb2.UserDefinedMessage.SerializeToString,
+                response_deserializer=user__defined__protos__pb2.UserDefinedMessage.FromString,
+                )
+        self.Streaming = channel.unary_stream(
+                '/userdefinedprotos.UserDefinedService/Streaming',
+                request_serializer=user__defined__protos__pb2.UserDefinedMessage.SerializeToString,
+                response_deserializer=user__defined__protos__pb2.UserDefinedMessage.FromString,
+                )
+
+
+class UserDefinedServiceServicer(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def Method1(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Streaming(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_UserDefinedServiceServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'Method1': grpc.unary_unary_rpc_method_handler(
+                    servicer.Method1,
+                    request_deserializer=user__defined__protos__pb2.UserDefinedMessage.FromString,
+                    response_serializer=user__defined__protos__pb2.UserDefinedMessage.SerializeToString,
+            ),
+            'Streaming': grpc.unary_stream_rpc_method_handler(
+                    servicer.Streaming,
+                    request_deserializer=user__defined__protos__pb2.UserDefinedMessage.FromString,
+                    response_serializer=user__defined__protos__pb2.UserDefinedMessage.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'userdefinedprotos.UserDefinedService', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+
+
+ # This class is part of an EXPERIMENTAL API.
+class UserDefinedService(object):
+    """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def Method1(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/userdefinedprotos.UserDefinedService/Method1',
+            user__defined__protos__pb2.UserDefinedMessage.SerializeToString,
+            user__defined__protos__pb2.UserDefinedMessage.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Streaming(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/userdefinedprotos.UserDefinedService/Streaming',
+            user__defined__protos__pb2.UserDefinedMessage.SerializeToString,
+            user__defined__protos__pb2.UserDefinedMessage.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
