@@ -17,12 +17,12 @@ class UserDefinedServiceStub(object):
         self.Method1 = channel.unary_unary(
                 '/userdefinedprotos.UserDefinedService/Method1',
                 request_serializer=user__defined__protos__pb2.UserDefinedMessage.SerializeToString,
-                response_deserializer=user__defined__protos__pb2.UserDefinedMessage.FromString,
+                response_deserializer=user__defined__protos__pb2.UserDefinedResponse.FromString,
                 )
-        self.Streaming = channel.unary_stream(
-                '/userdefinedprotos.UserDefinedService/Streaming',
+        self.Streaming1 = channel.unary_stream(
+                '/userdefinedprotos.UserDefinedService/Streaming1',
                 request_serializer=user__defined__protos__pb2.UserDefinedMessage.SerializeToString,
-                response_deserializer=user__defined__protos__pb2.UserDefinedMessage.FromString,
+                response_deserializer=user__defined__protos__pb2.UserDefinedResponse.FromString,
                 )
 
 
@@ -35,7 +35,7 @@ class UserDefinedServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def Streaming(self, request, context):
+    def Streaming1(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -47,12 +47,12 @@ def add_UserDefinedServiceServicer_to_server(servicer, server):
             'Method1': grpc.unary_unary_rpc_method_handler(
                     servicer.Method1,
                     request_deserializer=user__defined__protos__pb2.UserDefinedMessage.FromString,
-                    response_serializer=user__defined__protos__pb2.UserDefinedMessage.SerializeToString,
+                    response_serializer=user__defined__protos__pb2.UserDefinedResponse.SerializeToString,
             ),
-            'Streaming': grpc.unary_stream_rpc_method_handler(
-                    servicer.Streaming,
+            'Streaming1': grpc.unary_stream_rpc_method_handler(
+                    servicer.Streaming1,
                     request_deserializer=user__defined__protos__pb2.UserDefinedMessage.FromString,
-                    response_serializer=user__defined__protos__pb2.UserDefinedMessage.SerializeToString,
+                    response_serializer=user__defined__protos__pb2.UserDefinedResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -77,12 +77,12 @@ class UserDefinedService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/userdefinedprotos.UserDefinedService/Method1',
             user__defined__protos__pb2.UserDefinedMessage.SerializeToString,
-            user__defined__protos__pb2.UserDefinedMessage.FromString,
+            user__defined__protos__pb2.UserDefinedResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def Streaming(request,
+    def Streaming1(request,
             target,
             options=(),
             channel_credentials=None,
@@ -92,8 +92,69 @@ class UserDefinedService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/userdefinedprotos.UserDefinedService/Streaming',
+        return grpc.experimental.unary_stream(request, target, '/userdefinedprotos.UserDefinedService/Streaming1',
             user__defined__protos__pb2.UserDefinedMessage.SerializeToString,
-            user__defined__protos__pb2.UserDefinedMessage.FromString,
+            user__defined__protos__pb2.UserDefinedResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+
+class FruitServiceStub(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.FruitStand = channel.unary_unary(
+                '/userdefinedprotos.FruitService/FruitStand',
+                request_serializer=user__defined__protos__pb2.FruitAmounts.SerializeToString,
+                response_deserializer=user__defined__protos__pb2.FruitCosts.FromString,
+                )
+
+
+class FruitServiceServicer(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def FruitStand(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_FruitServiceServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'FruitStand': grpc.unary_unary_rpc_method_handler(
+                    servicer.FruitStand,
+                    request_deserializer=user__defined__protos__pb2.FruitAmounts.FromString,
+                    response_serializer=user__defined__protos__pb2.FruitCosts.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'userdefinedprotos.FruitService', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+
+
+ # This class is part of an EXPERIMENTAL API.
+class FruitService(object):
+    """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def FruitStand(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/userdefinedprotos.FruitService/FruitStand',
+            user__defined__protos__pb2.FruitAmounts.SerializeToString,
+            user__defined__protos__pb2.FruitCosts.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -11,6 +11,8 @@ from user_defined_protos_pb2 import (
     UserDefinedResponse,
 )
 
+from ray.serve.generated import serve_pb2
+
 import ray
 from ray import serve
 from ray.serve.handle import RayServeDeploymentHandle
@@ -136,8 +138,19 @@ g2 = FruitMarket.options(name="grpc-deployment-model-composition").bind(
 class HttpDeployment:
     async def __call__(self, request: Request) -> str:
         body = await request.body()
-        print("request.body()", body)
+        print("request.body() in HttpDeployment", body)
         return f"Hello {body} {time.time()}"
 
 
 h = HttpDeployment.options(name="http-deployment").bind()
+
+
+@serve.deployment
+class HttpDeployment2:
+    async def __call__(self, request: Request) -> str:
+        body = await request.body()
+        print("request.body() in HttpDeployment2", body)
+        return f"World {body} {time.time()}"
+
+
+h2 = HttpDeployment2.options(name="http-deployment").bind()

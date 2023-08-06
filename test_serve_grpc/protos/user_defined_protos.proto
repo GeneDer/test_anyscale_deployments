@@ -33,6 +33,10 @@ message FruitCosts {
 }
 
 service UserDefinedService {
-  rpc Method1(UserDefinedMessage) returns (UserDefinedMessage);
-  rpc Streaming(UserDefinedMessage) returns (stream UserDefinedMessage);
+  rpc Method1(UserDefinedMessage) returns (UserDefinedResponse);
+  rpc Streaming1(UserDefinedMessage) returns (stream UserDefinedResponse);
+}
+
+service FruitService {
+  rpc FruitStand(FruitAmounts) returns (FruitCosts);
 }
