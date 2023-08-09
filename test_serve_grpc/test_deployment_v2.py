@@ -8,7 +8,9 @@ from user_defined_protos_pb2 import (
     FruitAmounts,
     FruitCosts,
     UserDefinedMessage,
+    UserDefinedMessage2,
     UserDefinedResponse,
+    UserDefinedResponse2,
 )
 
 from ray.serve.generated import serve_pb2
@@ -38,7 +40,7 @@ class GrpcDeployment:
         )
         return user_response
 
-    def method2(self, user_message: UserDefinedMessage) -> UserDefinedResponse:
+    def method2(self, user_message: UserDefinedMessage2) -> UserDefinedResponse2:
         greeting = "This is from method2"
         user_response = UserDefinedResponse(greeting=greeting)
         return user_response

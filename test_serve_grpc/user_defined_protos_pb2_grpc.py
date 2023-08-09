@@ -14,13 +14,23 @@ class UserDefinedServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
+        self.__call__ = channel.unary_unary(
+                '/userdefinedprotos.UserDefinedService/__call__',
+                request_serializer=user__defined__protos__pb2.UserDefinedMessage.SerializeToString,
+                response_deserializer=user__defined__protos__pb2.UserDefinedResponse.FromString,
+                )
         self.Method1 = channel.unary_unary(
                 '/userdefinedprotos.UserDefinedService/Method1',
                 request_serializer=user__defined__protos__pb2.UserDefinedMessage.SerializeToString,
                 response_deserializer=user__defined__protos__pb2.UserDefinedResponse.FromString,
                 )
-        self.Streaming1 = channel.unary_stream(
-                '/userdefinedprotos.UserDefinedService/Streaming1',
+        self.Method2 = channel.unary_unary(
+                '/userdefinedprotos.UserDefinedService/Method2',
+                request_serializer=user__defined__protos__pb2.UserDefinedMessage2.SerializeToString,
+                response_deserializer=user__defined__protos__pb2.UserDefinedResponse2.FromString,
+                )
+        self.Streaming = channel.unary_stream(
+                '/userdefinedprotos.UserDefinedService/Streaming',
                 request_serializer=user__defined__protos__pb2.UserDefinedMessage.SerializeToString,
                 response_deserializer=user__defined__protos__pb2.UserDefinedResponse.FromString,
                 )
@@ -29,13 +39,25 @@ class UserDefinedServiceStub(object):
 class UserDefinedServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
+    def __call__(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def Method1(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def Streaming1(self, request, context):
+    def Method2(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Streaming(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -44,13 +66,23 @@ class UserDefinedServiceServicer(object):
 
 def add_UserDefinedServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
+            '__call__': grpc.unary_unary_rpc_method_handler(
+                    servicer.__call__,
+                    request_deserializer=user__defined__protos__pb2.UserDefinedMessage.FromString,
+                    response_serializer=user__defined__protos__pb2.UserDefinedResponse.SerializeToString,
+            ),
             'Method1': grpc.unary_unary_rpc_method_handler(
                     servicer.Method1,
                     request_deserializer=user__defined__protos__pb2.UserDefinedMessage.FromString,
                     response_serializer=user__defined__protos__pb2.UserDefinedResponse.SerializeToString,
             ),
-            'Streaming1': grpc.unary_stream_rpc_method_handler(
-                    servicer.Streaming1,
+            'Method2': grpc.unary_unary_rpc_method_handler(
+                    servicer.Method2,
+                    request_deserializer=user__defined__protos__pb2.UserDefinedMessage2.FromString,
+                    response_serializer=user__defined__protos__pb2.UserDefinedResponse2.SerializeToString,
+            ),
+            'Streaming': grpc.unary_stream_rpc_method_handler(
+                    servicer.Streaming,
                     request_deserializer=user__defined__protos__pb2.UserDefinedMessage.FromString,
                     response_serializer=user__defined__protos__pb2.UserDefinedResponse.SerializeToString,
             ),
@@ -63,6 +95,23 @@ def add_UserDefinedServiceServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class UserDefinedService(object):
     """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def __call__(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/userdefinedprotos.UserDefinedService/__call__',
+            user__defined__protos__pb2.UserDefinedMessage.SerializeToString,
+            user__defined__protos__pb2.UserDefinedResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Method1(request,
@@ -82,7 +131,7 @@ class UserDefinedService(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def Streaming1(request,
+    def Method2(request,
             target,
             options=(),
             channel_credentials=None,
@@ -92,7 +141,24 @@ class UserDefinedService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/userdefinedprotos.UserDefinedService/Streaming1',
+        return grpc.experimental.unary_unary(request, target, '/userdefinedprotos.UserDefinedService/Method2',
+            user__defined__protos__pb2.UserDefinedMessage2.SerializeToString,
+            user__defined__protos__pb2.UserDefinedResponse2.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Streaming(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/userdefinedprotos.UserDefinedService/Streaming',
             user__defined__protos__pb2.UserDefinedMessage.SerializeToString,
             user__defined__protos__pb2.UserDefinedResponse.FromString,
             options, channel_credentials,
@@ -156,5 +222,99 @@ class FruitService(object):
         return grpc.experimental.unary_unary(request, target, '/userdefinedprotos.FruitService/FruitStand',
             user__defined__protos__pb2.FruitAmounts.SerializeToString,
             user__defined__protos__pb2.FruitCosts.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+
+class ServeAPIServiceStub(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.ServeRoutes = channel.unary_unary(
+                '/ray.serve.ServeAPIService/ServeRoutes',
+                request_serializer=user__defined__protos__pb2.RoutesRequest.SerializeToString,
+                response_deserializer=user__defined__protos__pb2.RoutesResponse.FromString,
+                )
+        self.ServeHealthz = channel.unary_unary(
+                '/ray.serve.ServeAPIService/ServeHealthz',
+                request_serializer=user__defined__protos__pb2.HealthzRequest.SerializeToString,
+                response_deserializer=user__defined__protos__pb2.HealthzResponse.FromString,
+                )
+
+
+class ServeAPIServiceServicer(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def ServeRoutes(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ServeHealthz(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_ServeAPIServiceServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'ServeRoutes': grpc.unary_unary_rpc_method_handler(
+                    servicer.ServeRoutes,
+                    request_deserializer=user__defined__protos__pb2.RoutesRequest.FromString,
+                    response_serializer=user__defined__protos__pb2.RoutesResponse.SerializeToString,
+            ),
+            'ServeHealthz': grpc.unary_unary_rpc_method_handler(
+                    servicer.ServeHealthz,
+                    request_deserializer=user__defined__protos__pb2.HealthzRequest.FromString,
+                    response_serializer=user__defined__protos__pb2.HealthzResponse.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'userdefinedprotos.ServeAPIService', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+
+
+ # This class is part of an EXPERIMENTAL API.
+class ServeAPIService(object):
+    """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def ServeRoutes(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/userdefinedprotos.ServeAPIService/ServeRoutes',
+            user__defined__protos__pb2.RoutesRequest.SerializeToString,
+            user__defined__protos__pb2.RoutesResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ServeHealthz(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/userdefinedprotos.ServeAPIService/ServeHealthz',
+            user__defined__protos__pb2.HealthzRequest.SerializeToString,
+            user__defined__protos__pb2.HealthzResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

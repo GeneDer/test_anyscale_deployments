@@ -1,6 +1,7 @@
+from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Optional as _Optional
+from typing import ClassVar as _ClassVar, Iterable as _Iterable, Optional as _Optional
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -20,6 +21,26 @@ class FruitCosts(_message.Message):
     costs: float
     def __init__(self, costs: _Optional[float] = ...) -> None: ...
 
+class HealthzRequest(_message.Message):
+    __slots__ = []
+    def __init__(self) -> None: ...
+
+class HealthzResponse(_message.Message):
+    __slots__ = ["response"]
+    RESPONSE_FIELD_NUMBER: _ClassVar[int]
+    response: str
+    def __init__(self, response: _Optional[str] = ...) -> None: ...
+
+class RoutesRequest(_message.Message):
+    __slots__ = []
+    def __init__(self) -> None: ...
+
+class RoutesResponse(_message.Message):
+    __slots__ = ["application_name"]
+    APPLICATION_NAME_FIELD_NUMBER: _ClassVar[int]
+    application_name: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, application_name: _Optional[_Iterable[str]] = ...) -> None: ...
+
 class UserDefinedMessage(_message.Message):
     __slots__ = ["foo", "name", "num"]
     FOO_FIELD_NUMBER: _ClassVar[int]
@@ -30,6 +51,10 @@ class UserDefinedMessage(_message.Message):
     num: int
     def __init__(self, name: _Optional[str] = ..., foo: _Optional[str] = ..., num: _Optional[int] = ...) -> None: ...
 
+class UserDefinedMessage2(_message.Message):
+    __slots__ = []
+    def __init__(self) -> None: ...
+
 class UserDefinedResponse(_message.Message):
     __slots__ = ["greeting", "num_x2"]
     GREETING_FIELD_NUMBER: _ClassVar[int]
@@ -37,3 +62,9 @@ class UserDefinedResponse(_message.Message):
     greeting: str
     num_x2: int
     def __init__(self, greeting: _Optional[str] = ..., num_x2: _Optional[int] = ...) -> None: ...
+
+class UserDefinedResponse2(_message.Message):
+    __slots__ = ["greeting"]
+    GREETING_FIELD_NUMBER: _ClassVar[int]
+    greeting: str
+    def __init__(self, greeting: _Optional[str] = ...) -> None: ...

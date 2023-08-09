@@ -22,6 +22,12 @@ message UserDefinedResponse {
   int64 num_x2 = 2;
 }
 
+message UserDefinedMessage2 {}
+
+message UserDefinedResponse2 {
+  string greeting = 1;
+}
+
 message FruitAmounts {
     int64 orange = 1;
     int64 apple = 2;
@@ -33,10 +39,29 @@ message FruitCosts {
 }
 
 service UserDefinedService {
+  rpc __call__(UserDefinedMessage) returns (UserDefinedResponse);
   rpc Method1(UserDefinedMessage) returns (UserDefinedResponse);
-  rpc Streaming1(UserDefinedMessage) returns (stream UserDefinedResponse);
+  rpc Method2(UserDefinedMessage2) returns (UserDefinedResponse2);
+  rpc Streaming(UserDefinedMessage) returns (stream UserDefinedResponse);
 }
 
 service FruitService {
   rpc FruitStand(FruitAmounts) returns (FruitCosts);
+}
+
+message RoutesRequest {}
+
+message RoutesResponse {
+  repeated string application_names = 1;
+}
+
+message HealthzRequest {}
+
+message HealthzResponse {
+  string response = 1;
+}
+
+service ServeAPIService {
+  rpc ServeRoutes(RoutesRequest) returns (RoutesResponse);
+  rpc ServeHealthz(HealthzRequest) returns (HealthzResponse);
 }
