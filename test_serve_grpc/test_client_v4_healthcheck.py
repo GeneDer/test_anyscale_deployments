@@ -3,7 +3,7 @@ from user_defined_protos_pb2_grpc import ServeAPIServiceStub
 from google.protobuf.any_pb2 import Any as AnyProto
 
 
-channel = grpc.insecure_channel("localhost:9002")
+channel = grpc.insecure_channel("localhost:9000")
 
 stub = ServeAPIServiceStub(channel)
 

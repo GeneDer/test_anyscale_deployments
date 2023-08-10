@@ -1,6 +1,6 @@
 grpc_options:
 
-  port: 9002
+  port: 9000
 
   grpc_servicer_functions:
 

@@ -1,0 +1,30 @@
+name: grpc-service
+cloud: anyscale_v2_default_cloud
+cluster_env: gene-test-grpc:1
+ray_serve_config:
+  grpc_options:
+    port: 9000
+    grpc_servicer_functions:
+      - user_defined_protos_pb2_grpc.add_UserDefinedServiceServicer_to_server
+      - user_defined_protos_pb2_grpc.add_FruitServiceServicer_to_server
+
+  applications:
+    - name: app1
+      route_prefix: /
+      import_path: test_deployment_v2:h
+      runtime_env: { }
+
+    - name: app2
+      route_prefix: /foo
+      import_path: test_deployment_v2:h2
+      runtime_env: { }
+
+    - name: app3
+      route_prefix: /bar
+      import_path: test_deployment_v2:g
+      runtime_env: { }
+
+    - name: app4
+      route_prefix: /baz
+      import_path: test_deployment_v2:g2
+      runtime_env: { }

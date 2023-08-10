@@ -13,8 +13,6 @@ from user_defined_protos_pb2 import (
     UserDefinedResponse2,
 )
 
-from ray.serve.generated import serve_pb2
-
 import ray
 from ray import serve
 from ray.serve.handle import RayServeDeploymentHandle
@@ -87,7 +85,7 @@ class FruitMarket:
             "APPLE": _apple_stand,
         }
 
-    async def __call__(self, fruit_amounts_proto: FruitAmounts) -> FruitCosts:
+    async def fruitstand(self, fruit_amounts_proto: FruitAmounts) -> FruitCosts:
         fruit_amounts = {}
         if fruit_amounts_proto.orange:
             fruit_amounts["ORANGE"] = fruit_amounts_proto.orange
