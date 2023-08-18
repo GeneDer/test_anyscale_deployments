@@ -29,7 +29,7 @@ class GrpcDeployment:
         )
         return user_response
 
-    def method1(self, user_message: UserDefinedMessage) -> UserDefinedResponse:
+    def Method1(self, user_message: UserDefinedMessage) -> UserDefinedResponse:
         greeting = f"Hello {user_message.foo} from method1"
         num_x2 = user_message.num * 3
         user_response = UserDefinedResponse(
@@ -38,12 +38,12 @@ class GrpcDeployment:
         )
         return user_response
 
-    def method2(self, user_message: UserDefinedMessage2) -> UserDefinedResponse2:
+    def Method2(self, user_message: UserDefinedMessage2) -> UserDefinedResponse2:
         greeting = "This is from method2"
         user_response = UserDefinedResponse(greeting=greeting)
         return user_response
 
-    def streaming(
+    def Streaming(
             self, user_message: UserDefinedMessage
     ) -> Generator[UserDefinedResponse, None, None]:
         for i in range(10):
@@ -61,7 +61,7 @@ class GrpcDeployment:
     async def get_model(self, model_id: str) -> str:
         return f"loading model: {model_id}"
 
-    async def multiplex(self, user_message: UserDefinedMessage) -> UserDefinedResponse:
+    async def Multiplex(self, user_message: UserDefinedMessage) -> UserDefinedResponse:
         model_id = serve.get_multiplexed_model_id()
         model = await self.get_model(model_id)
         user_response = UserDefinedResponse(
@@ -85,7 +85,7 @@ class FruitMarket:
             "APPLE": _apple_stand,
         }
 
-    async def fruitstand(self, fruit_amounts_proto: FruitAmounts) -> FruitCosts:
+    async def FruitStand(self, fruit_amounts_proto: FruitAmounts) -> FruitCosts:
         fruit_amounts = {}
         if fruit_amounts_proto.orange:
             fruit_amounts["ORANGE"] = fruit_amounts_proto.orange
