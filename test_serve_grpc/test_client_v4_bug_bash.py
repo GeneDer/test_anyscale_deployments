@@ -35,7 +35,7 @@ test_in = UserDefinedMessage(
     foo="bar",
 )
 metadata = (
-    ("application", "app3_grpc-deployment"),
+    ("application", "app3"),
 )
 response, call = stub.__call__.with_call(request=test_in, metadata=metadata)
 print(call.trailing_metadata())  # Request id is returned in the trailing metadata
@@ -57,7 +57,7 @@ print("Output num_x2 field:", response.num_x2)
 print("\n\n____________test calling Method2 ____________")
 test_in = UserDefinedMessage2()
 metadata = (
-    ("application", "app3_grpc-deployment"),
+    ("application", "app3"),
 )
 response, call = stub.Method2.with_call(request=test_in, metadata=metadata)
 print(call.trailing_metadata())  # Request id is returned in the trailing metadata
@@ -73,7 +73,7 @@ test_in = UserDefinedMessage(
     foo="bar",
 )
 metadata = (
-    ("application", "app3_grpc-deployment"),
+    ("application", "app3"),
 )
 responses = stub.Streaming(test_in, metadata=metadata)
 for response in responses:
@@ -91,7 +91,7 @@ test_in = FruitAmounts(
     apple=8,
 )
 metadata = (
-    ("application", "app4_grpc-deployment-model-composition"),
+    ("application", "app4"),
 )
 response, call = stub.FruitStand.with_call(request=test_in, metadata=metadata)
 print(call.trailing_metadata())  # Request id is returned in the trailing metadata
