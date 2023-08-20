@@ -2,6 +2,8 @@ import argparse
 import grpc
 from user_defined_protos_pb2_grpc import UserDefinedServiceStub, FruitServiceStub
 from user_defined_protos_pb2 import UserDefinedMessage, UserDefinedMessage2, FruitAmounts
+from ray.serve.generated.serve_pb2_grpc import RayServeAPIServiceStub
+from ray.serve.generated.serve_pb2 import HealthzRequest, ListApplicationsRequest
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--url", type=str)
@@ -11,6 +13,25 @@ args = parser.parse_args()
 credentials = grpc.ssl_channel_credentials()
 channel = grpc.secure_channel(args.url, credentials)
 auth_token_metadata = ("authorization", f"bearer {args.token}")
+
+stub = RayServeAPIServiceStub(channel)
+metadata = (auth_token_metadata,)
+
+print("\n\n____________test calling ListApplications ____________")
+routes_request = ListApplicationsRequest()
+response, call = stub.ListApplications.with_call(routes_request, metadata=metadata)
+print("response code", call.code())
+print("Output type:", type(response))  # Response is a type of ListApplicationsResponse
+print("Full output:", response)
+
+
+print("\n\n____________test calling Healthz ____________")
+healthz_request = HealthzRequest()
+response, call = stub.Healthz.with_call(healthz_request, metadata=metadata)
+print("response code", call.code())
+print("Output type:", type(response))  # Response is a type of HealthzResponse
+print("Full output:", response)
+
 
 stub = UserDefinedServiceStub(channel)
 
@@ -22,7 +43,7 @@ test_in = UserDefinedMessage(
     foo="bar",
 )
 metadata = (
-    ("application", "app3_grpc-deployment"),
+    ("application", "app3"),
     auth_token_metadata,
 )
 response, call = stub.__call__.with_call(request=test_in, metadata=metadata)
@@ -45,7 +66,7 @@ print("Output num_x2 field:", response.num_x2)
 print("____________test calling Method2 ____________")
 test_in = UserDefinedMessage2()
 metadata = (
-    ("application", "app3_grpc-deployment"),
+    ("application", "app3"),
     auth_token_metadata,
 )
 response, call = stub.Method2.with_call(request=test_in, metadata=metadata)
@@ -62,7 +83,7 @@ test_in = UserDefinedMessage(
     foo="bar",
 )
 metadata = (
-    ("application", "app3_grpc-deployment"),
+    ("application", "app3"),
     auth_token_metadata,
 )
 responses = stub.Streaming(test_in, metadata=metadata)
@@ -81,7 +102,7 @@ test_in = FruitAmounts(
     apple=8,
 )
 metadata = (
-    ("application", "app4_grpc-deployment-model-composition"),
+    ("application", "app4"),
     auth_token_metadata,
 )
 response, call = stub.FruitStand.with_call(request=test_in, metadata=metadata)
