@@ -1,6 +1,7 @@
 import time
-from typing import Dict, Generator
 
+from fastapi import FastAPI
+from typing import Dict, Generator
 from starlette.requests import Request
 
 # Users need to include their custom message type which will be embedded in the request.
@@ -154,3 +155,21 @@ class HttpDeployment2:
 
 
 h2 = HttpDeployment2.options(name="http-deployment").bind()
+
+
+app = FastAPI()
+
+
+@serve.deployment
+@serve.ingress(app)
+class MyFastAPIDeployment:
+    @app.get("/root")
+    def root(self):
+        return "Hello, world!"
+
+    @app.get("/root2")
+    def root2(self):
+        return "hello2"
+
+
+app = MyFastAPIDeployment.bind()

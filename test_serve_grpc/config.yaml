@@ -49,3 +49,11 @@ applications:
     import_path: test_deployment_v2:g2
 
     runtime_env: {}
+
+  - name: app5
+
+    route_prefix: /fastapi
+
+    import_path: test_deployment_v2:app
+
+    runtime_env: {}
