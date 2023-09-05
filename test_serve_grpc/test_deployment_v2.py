@@ -1,4 +1,8 @@
 import time
+import torch
+from urllib.request import urlretrieve
+from PIL import Image
+from torchvision import transforms
 
 from fastapi import FastAPI
 from typing import Dict, Generator
@@ -8,6 +12,8 @@ from starlette.requests import Request
 from user_defined_protos_pb2 import (
     FruitAmounts,
     FruitCosts,
+    ImageClass,
+    ImageData,
     UserDefinedMessage,
     UserDefinedMessage2,
     UserDefinedResponse,
@@ -132,6 +138,84 @@ orange_stand = OrangeStand.bind()
 apple_stand = AppleStand.bind()
 g2 = FruitMarket.options(name="grpc-deployment-model-composition").bind(
     orange_stand, apple_stand
+)
+
+@serve.deployment
+class ImageClassifier:
+    def __init__(
+        self,
+        _image_downloader: RayServeDeploymentHandle,
+        _data_preprocessor: RayServeDeploymentHandle,
+    ):
+        self._image_downloader = _image_downloader
+        self._data_preprocessor = _data_preprocessor
+        self.model = torch.hub.load(
+            "pytorch/vision:v0.10.0", "resnet18", pretrained=True
+        )
+        self.model.eval()
+        self.image_label_filename = "imagenet_classes.txt"
+        self.download_image_labels()
+
+    def download_image_labels(self):
+        url = (
+            "https://raw.githubusercontent.com/pytorch/hub/master/imagenet_classes.txt"
+        )
+        urlretrieve(url, self.image_label_filename)
+
+    async def Predict(self, image_data: ImageData) -> ImageClass:
+        # Download image
+        await self._image_downloader.remote(image_data.url, image_data.filename)
+
+        # Preprocess image
+        input_batch = await self._data_preprocessor.remote(image_data.filename)
+
+        # Predict image
+        with torch.no_grad():
+            output = self.model(await input_batch)
+        probabilities = torch.nn.functional.softmax(output[0], dim=0)
+
+        return self.process_model_outputs(probabilities)
+
+    def process_model_outputs(self, probabilities: torch.Tensor) -> ImageClass:
+        image_classes = []
+        image_probabilities = []
+        with open(self.image_label_filename, "r") as f:
+            categories = [s.strip() for s in f.readlines()]
+            # Show top categories per image
+            top5_prob, top5_catid = torch.topk(probabilities, 5)
+            for i in range(top5_prob.size(0)):
+                image_classes.append(categories[top5_catid[i]])
+                image_probabilities.append(top5_prob[i].item())
+
+        return ImageClass(
+            classes=image_classes,
+            probabilities=image_probabilities,
+        )
+
+
+@serve.deployment
+class ImageDownloader:
+    def __call__(self, image_url: str, filename: str):
+        urlretrieve(image_url, filename)
+
+@serve.deployment
+class DataPreprocessor:
+    def __call__(self, filename: str):
+        input_image = Image.open(filename)
+        preprocess = transforms.Compose([
+            transforms.Resize(256),
+            transforms.CenterCrop(224),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        ])
+        input_tensor = preprocess(input_image)
+        return input_tensor.unsqueeze(0)  # create a mini-batch as expected by the model
+
+
+image_downloader = ImageDownloader.bind()
+data_preprocessor = DataPreprocessor.bind()
+g3 = ImageClassifier.options(name="grpc-image-classifier").bind(
+    image_downloader, data_preprocessor
 )
 
 

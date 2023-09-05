@@ -8,6 +8,8 @@ grpc_options:
 
     - user_defined_protos_pb2_grpc.add_FruitServiceServicer_to_server
 
+    - user_defined_protos_pb2_grpc.add_ImageClassificationServiceServicer_to_server
+
 http_options:
 
   host: 0.0.0.0
@@ -55,5 +57,13 @@ applications:
     route_prefix: /fastapi
 
     import_path: test_deployment_v2:app
+
+    runtime_env: {}
+
+  - name: app6
+
+    route_prefix: /app6
+
+    import_path: test_deployment_v2:g3
 
     runtime_env: {}

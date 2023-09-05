@@ -48,3 +48,17 @@ service UserDefinedService {
 service FruitService {
   rpc FruitStand(FruitAmounts) returns (FruitCosts);
 }
+
+message ImageData {
+    string url = 1;
+    string filename = 2;
+}
+
+message ImageClass {
+    repeated string classes = 1;
+    repeated float probabilities = 2;
+}
+
+service ImageClassificationService {
+  rpc Predict(ImageData) returns (ImageClass);
+}

@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x19user_defined_protos.proto\x12\x11userdefinedprotos\"<\n\x12UserDefinedMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03\x66oo\x18\x02 \x01(\t\x12\x0b\n\x03num\x18\x03 \x01(\x03\"7\n\x13UserDefinedResponse\x12\x10\n\x08greeting\x18\x01 \x01(\t\x12\x0e\n\x06num_x2\x18\x02 \x01(\x03\"\x15\n\x13UserDefinedMessage2\"(\n\x14UserDefinedResponse2\x12\x10\n\x08greeting\x18\x01 \x01(\t\"=\n\x0c\x46ruitAmounts\x12\x0e\n\x06orange\x18\x01 \x01(\x03\x12\r\n\x05\x61pple\x18\x02 \x01(\x03\x12\x0e\n\x06\x62\x61nana\x18\x03 \x01(\x03\"\x1b\n\nFruitCosts\x12\r\n\x05\x63osts\x18\x01 \x01(\x02\x32\x83\x03\n\x12UserDefinedService\x12Y\n\x08__call__\x12%.userdefinedprotos.UserDefinedMessage\x1a&.userdefinedprotos.UserDefinedResponse\x12X\n\x07Method1\x12%.userdefinedprotos.UserDefinedMessage\x1a&.userdefinedprotos.UserDefinedResponse\x12Z\n\x07Method2\x12&.userdefinedprotos.UserDefinedMessage2\x1a\'.userdefinedprotos.UserDefinedResponse2\x12\\\n\tStreaming\x12%.userdefinedprotos.UserDefinedMessage\x1a&.userdefinedprotos.UserDefinedResponse0\x01\x32\\\n\x0c\x46ruitService\x12L\n\nFruitStand\x12\x1f.userdefinedprotos.FruitAmounts\x1a\x1d.userdefinedprotos.FruitCostsB:\n#io.ray.examples.user_defined_protosB\x11UserDefinedProtosP\x01\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x19user_defined_protos.proto\x12\x11userdefinedprotos\"<\n\x12UserDefinedMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03\x66oo\x18\x02 \x01(\t\x12\x0b\n\x03num\x18\x03 \x01(\x03\"7\n\x13UserDefinedResponse\x12\x10\n\x08greeting\x18\x01 \x01(\t\x12\x0e\n\x06num_x2\x18\x02 \x01(\x03\"\x15\n\x13UserDefinedMessage2\"(\n\x14UserDefinedResponse2\x12\x10\n\x08greeting\x18\x01 \x01(\t\"=\n\x0c\x46ruitAmounts\x12\x0e\n\x06orange\x18\x01 \x01(\x03\x12\r\n\x05\x61pple\x18\x02 \x01(\x03\x12\x0e\n\x06\x62\x61nana\x18\x03 \x01(\x03\"\x1b\n\nFruitCosts\x12\r\n\x05\x63osts\x18\x01 \x01(\x02\"*\n\tImageData\x12\x0b\n\x03url\x18\x01 \x01(\t\x12\x10\n\x08\x66ilename\x18\x02 \x01(\t\"4\n\nImageClass\x12\x0f\n\x07\x63lasses\x18\x01 \x03(\t\x12\x15\n\rprobabilities\x18\x02 \x03(\x02\x32\x83\x03\n\x12UserDefinedService\x12Y\n\x08__call__\x12%.userdefinedprotos.UserDefinedMessage\x1a&.userdefinedprotos.UserDefinedResponse\x12X\n\x07Method1\x12%.userdefinedprotos.UserDefinedMessage\x1a&.userdefinedprotos.UserDefinedResponse\x12Z\n\x07Method2\x12&.userdefinedprotos.UserDefinedMessage2\x1a\'.userdefinedprotos.UserDefinedResponse2\x12\\\n\tStreaming\x12%.userdefinedprotos.UserDefinedMessage\x1a&.userdefinedprotos.UserDefinedResponse0\x01\x32\\\n\x0c\x46ruitService\x12L\n\nFruitStand\x12\x1f.userdefinedprotos.FruitAmounts\x1a\x1d.userdefinedprotos.FruitCosts2d\n\x1aImageClassificationService\x12\x46\n\x07Predict\x12\x1c.userdefinedprotos.ImageData\x1a\x1d.userdefinedprotos.ImageClassB:\n#io.ray.examples.user_defined_protosB\x11UserDefinedProtosP\x01\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'user_defined_protos_pb2', globals())
@@ -33,8 +33,14 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _FRUITAMOUNTS._serialized_end=293
   _FRUITCOSTS._serialized_start=295
   _FRUITCOSTS._serialized_end=322
-  _USERDEFINEDSERVICE._serialized_start=325
-  _USERDEFINEDSERVICE._serialized_end=712
-  _FRUITSERVICE._serialized_start=714
-  _FRUITSERVICE._serialized_end=806
+  _IMAGEDATA._serialized_start=324
+  _IMAGEDATA._serialized_end=366
+  _IMAGECLASS._serialized_start=368
+  _IMAGECLASS._serialized_end=420
+  _USERDEFINEDSERVICE._serialized_start=423
+  _USERDEFINEDSERVICE._serialized_end=810
+  _FRUITSERVICE._serialized_start=812
+  _FRUITSERVICE._serialized_end=904
+  _IMAGECLASSIFICATIONSERVICE._serialized_start=906
+  _IMAGECLASSIFICATIONSERVICE._serialized_end=1006
 # @@protoc_insertion_point(module_scope)

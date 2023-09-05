@@ -1,6 +1,7 @@
+from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Optional as _Optional
+from typing import ClassVar as _ClassVar, Iterable as _Iterable, Optional as _Optional
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -19,6 +20,22 @@ class FruitCosts(_message.Message):
     COSTS_FIELD_NUMBER: _ClassVar[int]
     costs: float
     def __init__(self, costs: _Optional[float] = ...) -> None: ...
+
+class ImageClass(_message.Message):
+    __slots__ = ["classes", "probabilities"]
+    CLASSES_FIELD_NUMBER: _ClassVar[int]
+    PROBABILITIES_FIELD_NUMBER: _ClassVar[int]
+    classes: _containers.RepeatedScalarFieldContainer[str]
+    probabilities: _containers.RepeatedScalarFieldContainer[float]
+    def __init__(self, classes: _Optional[_Iterable[str]] = ..., probabilities: _Optional[_Iterable[float]] = ...) -> None: ...
+
+class ImageData(_message.Message):
+    __slots__ = ["filename", "url"]
+    FILENAME_FIELD_NUMBER: _ClassVar[int]
+    URL_FIELD_NUMBER: _ClassVar[int]
+    filename: str
+    url: str
+    def __init__(self, url: _Optional[str] = ..., filename: _Optional[str] = ...) -> None: ...
 
 class UserDefinedMessage(_message.Message):
     __slots__ = ["foo", "name", "num"]

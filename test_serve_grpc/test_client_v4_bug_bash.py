@@ -1,6 +1,6 @@
 import grpc
-from user_defined_protos_pb2_grpc import UserDefinedServiceStub, FruitServiceStub
-from user_defined_protos_pb2 import UserDefinedMessage, UserDefinedMessage2, FruitAmounts
+from user_defined_protos_pb2_grpc import UserDefinedServiceStub, FruitServiceStub, ImageClassificationServiceStub
+from user_defined_protos_pb2 import UserDefinedMessage, UserDefinedMessage2, FruitAmounts, ImageData
 from ray.serve.generated.serve_pb2_grpc import RayServeAPIServiceStub
 from ray.serve.generated.serve_pb2 import HealthzRequest, ListApplicationsRequest
 
@@ -98,3 +98,20 @@ print(call.trailing_metadata())  # Request id is returned in the trailing metada
 print("Output type:", type(response))  # Response is a type of FruitCosts
 print("Full output:", response)
 print("Output costs field:", response.costs)
+
+
+print("\n\n____________test calling FruitStand ____________")
+stub = ImageClassificationServiceStub(channel)
+test_in = ImageData(
+    url="https://github.com/pytorch/hub/raw/master/images/dog.jpg",
+    filename="dog.jpg",
+)
+metadata = (
+    ("application", "app6"),
+)
+response, call = stub.Predict.with_call(request=test_in, metadata=metadata)
+print(call.trailing_metadata())  # Request id is returned in the trailing metadata
+print("Output type:", type(response))  # Response is a type of ImageClass
+print("Full output:", response)
+print("Output classes field:", response.classes)
+print("Output probabilities field:", response.probabilities)
