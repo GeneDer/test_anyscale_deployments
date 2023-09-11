@@ -4,11 +4,10 @@
 
 
 # Use Anyscale base image
-FROM anyscale/ray:2.6.2-py310
+FROM anyscale/ray:nightly-py310
 
-# Install Ray with grpc proxy code
-RUN pip uninstall -y ray && \
-    pip install -U https://ray-ci-artifact-pr-public.s3.amazonaws.com/5cea3a9c07cd44544eb150f17b0dd95038648aad/tmp/artifacts/.whl/ray-3.0.0.dev0-cp310-cp310-manylinux2014_x86_64.whl
+# Install dependencies
+RUN pip install --upgrade pip && pip install -U torch==2.0.1 torchvision==0.15.2
 
 WORKDIR /home/ray
 

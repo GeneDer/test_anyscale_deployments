@@ -100,7 +100,7 @@ print("Full output:", response)
 print("Output costs field:", response.costs)
 
 
-print("\n\n____________test calling FruitStand ____________")
+print("\n\n____________test calling ImageClassification ____________")
 stub = ImageClassificationServiceStub(channel)
 test_in = ImageData(
     url="https://github.com/pytorch/hub/raw/master/images/dog.jpg",

@@ -7,6 +7,7 @@ ray_serve_config:
     grpc_servicer_functions:
       - user_defined_protos_pb2_grpc.add_UserDefinedServiceServicer_to_server
       - user_defined_protos_pb2_grpc.add_FruitServiceServicer_to_server
+      - user_defined_protos_pb2_grpc.add_ImageClassificationServiceServicer_to_server
 
   applications:
     - name: app1
@@ -27,4 +28,14 @@ ray_serve_config:
     - name: app4
       route_prefix: /baz
       import_path: test_deployment_v2:g2
+      runtime_env: { }
+
+    - name: app5
+      route_prefix: /fastapi
+      import_path: test_deployment_v2:app
+      runtime_env: { }
+
+    - name: app6
+      route_prefix: /app6
+      import_path: test_deployment_v2:g3
       runtime_env: { }
