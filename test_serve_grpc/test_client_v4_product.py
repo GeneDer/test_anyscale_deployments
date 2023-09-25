@@ -12,7 +12,7 @@ args = parser.parse_args()
 
 credentials = grpc.ssl_channel_credentials()
 channel = grpc.secure_channel(args.url, credentials)
-auth_token_metadata = ("authorization", f"bearer {args.token}")
+auth_token_metadata = ("authorization", f"bearer grpc-{args.token}")
 
 stub = RayServeAPIServiceStub(channel)
 metadata = (auth_token_metadata,)
