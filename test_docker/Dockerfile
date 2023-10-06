@@ -35,8 +35,8 @@ RUN echo hello_world
 RUN pip install --upgrade pip
 RUN pip install -r python/requirements.txt
 RUN bazel info
-RUN bazel build //:ray_pkg
-RUN pip install -e python
+# RUN bazel build //:ray_pkg
+# RUN pip install -e python
 
 # Expose ports
 EXPOSE 8000

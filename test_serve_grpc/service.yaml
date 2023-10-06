@@ -1,6 +1,11 @@
 name: grpc-service
 cluster_env: gene-test-grpc:1
 cloud: anyscale_v2_default_cloud
+config:
+  grpc_service_names:
+    - userdefinedprotos.UserDefinedService
+    - userdefinedprotos.FruitService
+    - userdefinedprotos.ImageClassificationService
 ray_serve_config:
   grpc_options:
     port: 9000

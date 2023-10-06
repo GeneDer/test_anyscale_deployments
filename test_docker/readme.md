@@ -21,6 +21,7 @@ docker run -it --rm -v /Users/gene/workspace/ray:/ray -w /ray ubuntu:20.04 bash
 
 
 docker build -t gene-ray-dev:latest .
-docker build -t gene-ray-dev:latest -f Dockerfile /Users/gene/workspace/ray
 
+docker build -t gene-ray-dev:latest -f Dockerfile /Users/gene/workspace/ray
+docker run -it --rm -v /Users/gene/workspace/ray:/ray -w /ray gene-ray-dev:latest bash
 ```
