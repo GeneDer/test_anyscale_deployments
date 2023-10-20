@@ -1,0 +1,109 @@
+apiVersion: ray.io/v1alpha1
+kind: RayService
+metadata:
+  name: rayservice-grpc
+spec:
+  serviceUnhealthySecondThreshold: 900 # Config for the health check threshold for Ray Serve applications. Default value is 900.
+  deploymentUnhealthySecondThreshold: 300 # Config for the health check threshold for Ray dashboard agent. Default value is 300.
+  serveConfigV2: |
+    grpc_options:
+      port: 9000
+      grpc_servicer_functions:
+        - user_defined_protos_pb2_grpc.add_UserDefinedServiceServicer_to_server
+        - user_defined_protos_pb2_grpc.add_FruitServiceServicer_to_server
+        - user_defined_protos_pb2_grpc.add_ImageClassificationServiceServicer_to_server
+    
+    applications:
+      - name: app1
+        route_prefix: /
+        import_path: test_deployment_v2:h
+        runtime_env: { }
+  
+      - name: app2
+        route_prefix: /foo
+        import_path: test_deployment_v2:h2
+        runtime_env: { }
+  
+      - name: app3
+        route_prefix: /bar
+        import_path: test_deployment_v2:g
+        runtime_env: { }
+  
+      - name: app4
+        route_prefix: /baz
+        import_path: test_deployment_v2:g2
+        runtime_env: { }
+  
+      - name: app5
+        route_prefix: /fastapi
+        import_path: test_deployment_v2:app
+        runtime_env: { }
+  
+      - name: app6
+        route_prefix: /app6
+        import_path: test_deployment_v2:g3
+        runtime_env: { }
+
+  rayClusterConfig:
+    rayVersion: '2.7.0' # should match the Ray version in the image of the containers
+    ######################headGroupSpecs#################################
+    # Ray head pod template.
+    headGroupSpec:
+      # The `rayStartParams` are used to configure the `ray start` command.
+      # See https://github.com/ray-project/kuberay/blob/master/docs/guidance/rayStartParams.md for the default settings of `rayStartParams` in KubeRay.
+      # See https://docs.ray.io/en/latest/cluster/cli.html#ray-start for all available options in `rayStartParams`.
+      rayStartParams:
+        dashboard-host: '0.0.0.0'
+        num-cpus: '10'
+      #pod template
+      template:
+        spec:
+          containers:
+            - name: ray-head
+              image: geneanyscale/gene-test-anyscale:10202023
+              resources:
+                limits:
+                  cpu: 1
+                  memory: 4Gi
+                requests:
+                  cpu: 1
+                  memory: 4Gi
+              ports:
+                - containerPort: 6379
+                  name: gcs-server
+                - containerPort: 8265 # Ray dashboard
+                  name: dashboard
+                - containerPort: 10001
+                  name: client
+                - containerPort: 8000
+                  name: serve
+                - containerPort: 9000
+                  name: serve-grpc
+    workerGroupSpecs:
+      # the pod replicas in this group typed worker
+      - replicas: 1
+        minReplicas: 1
+        maxReplicas: 5
+        # logical group name, for this called small-group, also can be functional
+        groupName: worker
+        # The `rayStartParams` are used to configure the `ray start` command.
+        # See https://github.com/ray-project/kuberay/blob/master/docs/guidance/rayStartParams.md for the default settings of `rayStartParams` in KubeRay.
+        # See https://docs.ray.io/en/latest/cluster/cli.html#ray-start for all available options in `rayStartParams`.
+        rayStartParams: {}
+        #pod template
+        template:
+          spec:
+            containers:
+              - name: ray-worker # must consist of lower case alphanumeric characters or '-', and must start and end with an alphanumeric character (e.g. 'my-name',  or '123-abc'
+                image: geneanyscale/gene-test-anyscale:10202023
+                lifecycle:
+                  preStop:
+                    exec:
+                      command: ["/bin/sh","-c","ray stop"]
+                resources:
+                  limits:
+                    cpu: 1
+                    memory: 4Gi
+                  requests:
+                    cpu: 1
+                    memory: 4Gi
