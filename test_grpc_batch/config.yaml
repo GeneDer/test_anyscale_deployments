@@ -1,0 +1,18 @@
+grpc_options:
+  port: 9000
+  grpc_servicer_functions:
+    - user_defined_protos_pb2_grpc.add_UserDefinedServiceServicer_to_server
+
+applications:
+  - name: app_grpc
+    route_prefix: /app_grpc
+    import_path: deployment:app_grpc
+    runtime_env: {}
+  - name: app_grpc2
+    route_prefix: /app_grpc2
+    import_path: deployment:app_grpc2
+    runtime_env: {}
+  - name: app_http
+    route_prefix: /app_http
+    import_path: deployment:app_http
+    runtime_env: {}

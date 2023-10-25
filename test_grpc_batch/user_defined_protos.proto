@@ -1,0 +1,33 @@
+// python -m grpc_tools.protoc -I=. --python_out=. --grpc_python_out=. ./user_defined_protos.proto
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.ray.examples.user_defined_protos";
+option java_outer_classname = "UserDefinedProtos";
+
+package userdefinedprotos;
+
+message Request {
+  string name = 1;
+}
+
+message Responses {
+  repeated string greeting = 1;
+}
+
+message UserDefinedMessage {
+  string name = 1;
+  string origin = 2;
+  int64 num = 3;
+}
+
+message UserDefinedResponse {
+  string greeting = 1;
+  int64 num = 2;
+}
+
+service UserDefinedService {
+  rpc __call__(UserDefinedMessage) returns (UserDefinedResponse);
+  rpc __call__2(Request) returns (Responses);
+}
