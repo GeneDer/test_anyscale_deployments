@@ -1,0 +1,14 @@
+grpc_options:
+  port: 9000
+  grpc_servicer_functions:
+    - user_defined_protos_pb2_grpc.add_UserDefinedServiceServicer_to_server
+
+applications:
+  - name: app
+    route_prefix: /app
+    import_path: test_cancel_deployment:g
+    runtime_env: {}
+  - name: app1
+    route_prefix: /app1
+    import_path: test_cancel_deployment:h
+    runtime_env: {}
