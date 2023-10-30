@@ -1,0 +1,21 @@
+name: grpc-service
+cluster_env: grpc-cluster-env:5  # rebuild the cluster env will automatically increment the version
+cloud: anyscale_v2_default_cloud
+config:
+  protocols:
+    grpc:
+      enabled: true
+      service_names:
+        - userdefinedprotos
+# Ray Serve config now deploys the grpc_image_classifier application
+ray_serve_config:
+  grpc_options:
+    port: 9000
+    grpc_servicer_functions:
+      - user_defined_protos_pb2_grpc.add_ImageClassificationServiceServicer_to_server
+
+  applications:
+    - name: grpc_image_classifier
+      route_prefix: /grpc_image_classifier
+      import_path: deployment:grpc_image_classifier
+      runtime_env: { }
