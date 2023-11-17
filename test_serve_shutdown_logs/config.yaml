@@ -1,0 +1,16 @@
+proxy_location: HeadOnly
+http_options:
+  host: 0.0.0.0
+  port: 8000
+applications:
+  - name: DeploymentInfoApp
+    route_prefix: /deployment
+    import_path: deployment:DeploymentInfo_app
+    deployments:
+      - name: DeploymentInfo
+
+  - name: LamaApp
+    route_prefix: /lama
+    import_path: deployment:lama_app
+    deployments:
+      - name: Lama
