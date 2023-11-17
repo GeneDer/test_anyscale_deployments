@@ -1,0 +1,5 @@
+applications:
+  - name: app
+    route_prefix: /app
+    import_path: deployment:app
+    runtime_env: {}
