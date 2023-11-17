@@ -1,0 +1,3 @@
+# anyscale cluster-env build cluster_env.yaml --name gene-test-endpoints
+docker_image: registry.hub.docker.com/anyscale/ray-llm:latest
+ray_version: nightly

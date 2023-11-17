@@ -1,0 +1,24 @@
+base_model_id: meta-llama/Llama-2-7b-chat-hf
+model_id: test_model
+generation:
+  prompt_format:
+    system: "<<SYS>>\n{instruction}\n<</SYS>>\n\n"
+    assistant: " {instruction} </s><s> "
+    trailing_assistant: " "
+    user: "[INST] {system}{instruction} [/INST]"
+    system_in_user: true
+    default_system_message: ""
+  stopping_sequences: ["<unk>"]
+#generation:
+#  generate_kwargs:
+#    do_sample: true
+#    max_new_tokens: 512
+#    temperature: 0.4
+#    top_p: 1.0
+#    repetition_penalty: 1.02
+#    ignore_eos_token: false
+lora_mirror_config:
+  # bucket_uri: s3://foobar
+  bucket_uri: s3://anyscale-test-data-cld-i2w99rzq8b6lbjkke9y94vi5/org_7c1Kalm9WcX2bNIjW53GUT/cld_kvedZWag2qA8i5BjxUevf5i7/artifact_storage/gene__der__su/llmforge-finetuning/meta-llama/Llama-2-7b-chat-hf/TorchTrainer_2023-11-03_14-56-23/TorchTrainer_d47ee_00000_0_2023-11-03_14-56-23/checkpoint_000000/
+engine_kwargs:
+  enable_lora: True

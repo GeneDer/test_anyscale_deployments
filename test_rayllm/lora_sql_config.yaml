@@ -1,0 +1,20 @@
+base_model_id: meta-llama/Llama-2-7b-hf
+model_id: test_model
+generation:
+  generate_kwargs:
+    do_sample: true
+    max_new_tokens: 512
+    temperature: 0.4
+    top_p: 1.0
+    repetition_penalty: 1.02
+    ignore_eos_token: false
+  prompt_format:
+    system: "[system] {instruction} [/system] "
+    assistant: "[assistant] {instruction} [/assistant] "
+    trailing_assistant: "[assistant]"
+    user: "[user] {instruction} [/user] "
+  stopping_sequences:  ["[/assistant]"]
+lora_mirror_config:
+  bucket_uri: s3://gene-dev2/sql-lora-adapter/
+engine_kwargs:
+  enable_lora: True
