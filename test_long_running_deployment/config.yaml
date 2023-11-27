@@ -1,0 +1,9 @@
+applications:
+  - name: slow_thing
+    route_prefix: /slow_thing
+    import_path: deployment:slow_thing
+    runtime_env: {}
+  - name: http_entrypoint_service
+    route_prefix: /http_entrypoint_service
+    import_path: deployment:http_entrypoint_service
+    runtime_env: {}
