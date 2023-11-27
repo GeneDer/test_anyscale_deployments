@@ -1,0 +1,73 @@
+name: services-canary-pinger
+project_id: prj_3bh7hmq17r5i7r5ndn5fjzugs7
+version: v1.7
+#canary_percent: 100
+ray_serve_config:
+  runtime_env:
+    pip:
+      - aiohttp==3.8.4
+      - aiohttp-retry==2.8.3
+    env_vars:
+      RAY_SERVE_REQUEST_PROCESSING_TIMEOUT_S: '1'
+    working_dir: >-
+      https://github.com/ray-project/serve_workloads/archive/3c776afbbd25ca778fb5cbd772187582688b4f37.zip
+  deployments:
+    - name: Router
+      num_replicas: 1
+      ray_actor_options:
+        num_cpus: 0
+    - name: receiver_Pinger
+      user_config:
+        url: >-
+          https://services-canary-receiver-zugs7.cld-kvedzwag2qa8i5bj.s.anyscaleuserdata.com
+        max_qps: 100
+        bearer_token: wW3KjSKa3a65S1W_w2EQzT3ChsQy4Lfr-ypjxQuTiIw
+      num_replicas: 1
+      ray_actor_options:
+        num_cpus: 0
+    - name: self_Pinger
+      user_config:
+        url: >-
+          https://services-canary-pinger-zugs7.cld-kvedzwag2qa8i5bj.s.anyscaleuserdata.com
+        max_qps: 100
+        bearer_token: AoaYbVWw6RHMIifBzAnayEXCx4xPVrfIQY8YNFilV5w
+      num_replicas: 1
+      ray_actor_options:
+        num_cpus: 0
+    - name: Reaper
+      user_config:
+        receiver_url: >-
+          https://services-canary-receiver-zugs7.cld-kvedzwag2qa8i5bj.s.anyscaleuserdata.com
+        kill_interval_s: 31540000
+        receiver_bearer_token: wW3KjSKa3a65S1W_w2EQzT3ChsQy4Lfr-ypjxQuTiIw
+      num_replicas: 1
+      ray_actor_options:
+        num_cpus: 0
+    - name: ReceiverHelmsman
+      user_config:
+        cookie: >-
+          sessionv2=aph0_CkcwRQIgJwEe0Y_lqU95MmAwzaeOtCRzi79IHVURDsMh4g5nkxICIQChKaw1t506-DxuMk-Ll53bxV7pWcIToLF-7FRQMRGfrhJhEiDIf7KHV3Vh9H5DIeXQu0ZrXjr9gGVVIPlxIle7iYc3yRgBIh51c3Jfd3YzazVxZWs0c2RybnlyZWNtNW4zOTVzaDM6Cwi7yv2rBhCQysxyQgsIj67fqgYQkMrMcvIBAA
+        project_id: prj_3bh7hmq17r5i7r5ndn5fjzugs7
+        receiver_url: >-
+          https://services-canary-receiver-zugs7.cld-kvedzwag2qa8i5bj.s.anyscaleuserdata.com
+        receiver_build_id: anyscaleray262-py39
+        upgrade_interval_s: 31540000
+        receiver_service_id: service2_9apd9euwptd2eah1ptf2vw78mi
+        receiver_bearer_token: wW3KjSKa3a65S1W_w2EQzT3ChsQy4Lfr-ypjxQuTiIw
+        receiver_service_name: services-canary-receiver
+        receiver_compute_config_id: cpt_uxcxh1qi9bef46ppxm7vswlyw4
+        receiver_gcs_external_storage_config:
+          address: >-
+            internal-testing.onvfjm.clustercfg.memorydb.us-west-2.amazonaws.com:6379
+        upgrade_types:
+        - IN_PLACE
+        - ROLLOUT
+        base_anyscale_url: https://console.anyscale.com
+      num_replicas: 1
+      ray_actor_options:
+        num_cpus: 0
+  import_path: 'chaos_test.pinger:graph'
+build_id: anyscaleray280-py39
+compute_config_id: cpt_3bzqhflhsadagdig2r1nukd8us
+ray_gcs_external_storage_config:
+  address: 'internal-testing.onvfjm.clustercfg.memorydb.us-west-2.amazonaws.com:6379'

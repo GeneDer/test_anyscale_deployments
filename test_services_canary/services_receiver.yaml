@@ -1,0 +1,30 @@
+name: services-canary-receiver
+project_id: prj_3bh7hmq17r5i7r5ndn5fjzugs7
+version: v1.3
+#canary_percent: 100
+ray_serve_config:
+  runtime_env:
+    env_vars:
+      RAY_SERVE_REQUEST_PROCESSING_TIMEOUT_S: '1'
+    working_dir: >-
+      https://github.com/ray-project/serve_workloads/archive/3c776afbbd25ca778fb5cbd772187582688b4f37.zip
+  deployments:
+    - name: NodeKiller
+      num_replicas: 1
+      ray_actor_options:
+        num_cpus: 0
+    - name: Receiver
+      num_replicas: 3
+      ray_actor_options:
+        num_cpus: 0
+    - name: DiskLeaker
+      user_config:
+        num_GB: 0
+      num_replicas: 1
+      ray_actor_options:
+        num_cpus: 0
+  import_path: 'chaos_test.receiver:alpha'
+build_id: anyscaleray280-py39
+compute_config_id: cpt_3bzqhflhsadagdig2r1nukd8us
+ray_gcs_external_storage_config:
+  address: 'internal-testing.onvfjm.clustercfg.memorydb.us-west-2.amazonaws.com:6379'
