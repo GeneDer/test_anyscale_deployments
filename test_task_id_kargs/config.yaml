@@ -1,0 +1,7 @@
+applications:
+  - name: app1
+    route_prefix: /app1
+    import_path: conditional_dag.serve_dag
+    runtime_env: {}
+#    runtime_env:
+#      working_dir: https://github.com/ray-project/test_dag/archive/1a0ca74268de85affc6ead99121e2de7a01fa360.zip
