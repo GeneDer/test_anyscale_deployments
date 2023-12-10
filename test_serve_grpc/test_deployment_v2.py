@@ -10,6 +10,7 @@ from ray.serve.handle import RayServeDeploymentHandle
 from starlette.requests import Request
 from torchvision import transforms
 from typing import Dict, Generator, List
+import grpc
 
 # Users need to include their custom message type which will be embedded in the request.
 from user_defined_protos_pb2 import (
@@ -26,7 +27,40 @@ from user_defined_protos_pb2 import (
 
 @serve.deployment
 class GrpcDeployment:
-    def __call__(self, user_message: UserDefinedMessage) -> UserDefinedResponse:
+    def __call__(self, user_message: UserDefinedMessage, grpc_context) -> UserDefinedResponse:
+        # grpc_context = serve.get_grpc_context()
+        # grpc_context.set_code("grpc.StatusCode.OK!!!!!!!!!!")
+        # grpc_context.set_details("my details!!!!!!!!!!")
+        #
+        # print("grpc_context", grpc_context)
+        # model_id = serve.get_multiplexed_model_id()
+        # print("model_id", model_id)
+
+        # print("grpc_context.auth_context()", grpc_context.auth_context())
+        # print("grpc_context.auth_context()", type(grpc_context.auth_context()))
+        # print("grpc_context.code()", grpc_context.code())
+        # print("grpc_context.code()", type(grpc_context.code()))
+        # print("grpc_context.details()", grpc_context.details())
+        # print("grpc_context.details()", type(grpc_context.details()))
+        # print("grpc_context.invocation_metadata()", grpc_context.invocation_metadata())
+        # print("grpc_context.invocation_metadata()", type(grpc_context.invocation_metadata()))
+        # print("grpc_context.peer()", grpc_context.peer())
+        # print("grpc_context.peer()", type(grpc_context.peer()))
+        # print("grpc_context.peer_identities()", grpc_context.peer_identities())
+        # print("grpc_context.peer_identities()", type(grpc_context.peer_identities()))
+        # print("grpc_context.peer_identity_key()", grpc_context.peer_identity_key())
+        # print("grpc_context.peer_identity_key()", type(grpc_context.peer_identity_key()))
+        # print("grpc_context.trailing_metadata()", grpc_context.trailing_metadata())
+        # print("grpc_context.trailing_metadata()", type(grpc_context.trailing_metadata()))
+
+        grpc_context.set_code(grpc.StatusCode.OK)
+        grpc_context.set_details("not error")
+        # grpc_context.set_trailing_metadata([("foo", "bar")])
+        print("grpc_context.code()", grpc_context.code(), type(grpc_context.code()))
+        print("grpc_context.details()", grpc_context.details(), type(grpc_context.details()))
+        print("grpc_context.trailing_metadata()", grpc_context.trailing_metadata())
+
+        raise Exception("my exception!!!!!!!!!!")
         greeting = f"Hello {user_message.name} from {user_message.foo}"
         num_x2 = user_message.num * 2
         user_response = UserDefinedResponse(
@@ -50,9 +84,33 @@ class GrpcDeployment:
         return user_response
 
     def Streaming(
-        self, user_message: UserDefinedMessage
+        self, user_message: UserDefinedMessage, grpc_context
     ) -> Generator[UserDefinedResponse, None, None]:
         for i in range(10):
+            # grpc_context = serve.get_grpc_context()
+            #
+            # print("grpc_context.auth_context()", grpc_context.auth_context())
+            # print("grpc_context.auth_context()", type(grpc_context.auth_context()))
+            # print("grpc_context.code()", grpc_context.code())
+            # print("grpc_context.code()", type(grpc_context.code()))
+            # print("grpc_context.details()", grpc_context.details())
+            # print("grpc_context.details()", type(grpc_context.details()))
+            # print("grpc_context.invocation_metadata()", grpc_context.invocation_metadata())
+            # print("grpc_context.invocation_metadata()", type(grpc_context.invocation_metadata()))
+            # print("grpc_context.peer()", grpc_context.peer())
+            # print("grpc_context.peer()", type(grpc_context.peer()))
+            # print("grpc_context.peer_identities()", grpc_context.peer_identities())
+            # print("grpc_context.peer_identities()", type(grpc_context.peer_identities()))
+            # print("grpc_context.peer_identity_key()", grpc_context.peer_identity_key())
+            # print("grpc_context.peer_identity_key()", type(grpc_context.peer_identity_key()))
+            # print("grpc_context.trailing_metadata()", grpc_context.trailing_metadata())
+            # print("grpc_context.trailing_metadata()", type(grpc_context.trailing_metadata()))
+            #
+            grpc_context.set_details(f"{i}: my details!!!!!!!!!!")
+            grpc_context.set_trailing_metadata([(f"foo{i}", f"bar{i}")])
+            print("grpc_context.details()", grpc_context.details())
+            print("grpc_context.trailing_metadata()", grpc_context.trailing_metadata())
+
             greeting = f"{i}: Hello {user_message.name} from {user_message.foo}"
             num_x2 = user_message.num * 2 + i
             user_response = UserDefinedResponse(
@@ -109,7 +167,7 @@ class FruitMarket:
             if fruit not in self.directory:
                 return
             fruit_stand = self.directory[fruit]
-            ref: ray.ObjectRef = await fruit_stand.remote(int(amount))
+            ref: ray.ObjectRef = fruit_stand.remote(int(amount))
             result = await ref
             costs += result
         return costs
