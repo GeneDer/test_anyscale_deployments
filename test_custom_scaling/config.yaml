@@ -1,0 +1,20 @@
+applications:
+  - name: app_model
+    route_prefix: /app_model
+#    import_path: deployment:app_model
+    import_path: test_custom_scaling.deployment:app_model
+#    runtime_env: {}
+    runtime_env:
+      working_dir: "https://github.com/geneder/test_anyscale_deployments/archive/refs/heads/master.zip"
+    deployments:
+    - name: Model
+      autoscaling_config:
+        policy: deployment:custom_scaling
+        max_replicas: 10
+  - name: app_scale
+    route_prefix: /app_scale
+#    import_path: deployment:app_scale
+    import_path: test_custom_scaling.deployment:app_scale
+#    runtime_env: {}
+    runtime_env:
+      working_dir: "https://github.com/geneder/test_anyscale_deployments/archive/refs/heads/master.zip"
