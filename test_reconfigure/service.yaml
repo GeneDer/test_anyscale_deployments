@@ -1,0 +1,12 @@
+name: "gene-test-service-reconfigure"
+cluster_env: default_cluster_env_2.8.0_py310:1
+ray_serve_config:
+  applications:
+    - name: app
+      route_prefix: /app
+      import_path: deployment:app
+      runtime_env: { }
+      deployments:
+        - name: Counter
+          user_config:
+            count: 123
