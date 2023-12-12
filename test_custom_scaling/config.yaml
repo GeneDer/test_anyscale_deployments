@@ -9,7 +9,7 @@ applications:
     deployments:
     - name: Model
       autoscaling_config:
-        policy: deployment:custom_scaling
+        policy: test_custom_scaling.deployment:custom_scaling
         max_replicas: 10
   - name: app_scale
     route_prefix: /app_scale
