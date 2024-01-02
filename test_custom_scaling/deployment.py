@@ -17,11 +17,13 @@ def custom_scaling(context: AutoscalingContext):
 
 @serve.deployment(
     autoscaling_config={
-        # "policy": MyAutoscalingPolicy,
-        # "policy": custom_scaling,
-        "policy": "deployment:custom_scaling",
         "max_replicas": 10,
-        # "policy": "ray.serve._private.autoscaling_policy:BasicAutoscalingPolicy",
+        # "policy": custom_scaling,
+        # "policy": "deployment:custom_scaling",
+        "policy": "test_custom_scaling.deployment:custom_scaling",
+        # "policy": "ray.serve.autoscaling_policy:basic_autoscaling_policy",
+        # "policy": "ray.serve.autoscaling_policy:cpu_utilization_autoscaling_policy",
+        # "policy": "ray.serve.autoscaling_policy:latency_based_autoscaling_policy",
     }
 )
 class Model:
