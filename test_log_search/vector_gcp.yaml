@@ -1,0 +1,52 @@
+sources:
+    raw_ray_logs:
+        type: file
+        fingerprint:
+            ignored_header_bytes: 0
+            strategy: device_and_inode
+        include:
+            - /tmp/ray/*/logs/**/job-driver-*.*
+            - /tmp/ray/*/logs/**/runtime_env_setup-*.*
+            - /tmp/ray/*/logs/**/worker-*.out
+            - /tmp/ray/*/logs/**/worker-*.err
+            - /tmp/ray/*/logs/**/serve/*.*
+        exclude:
+            # The session_latest directory is a symlink to an actual session directory,
+            # so we intentionally exclude it here so Vector doesn't ingest duplicates.
+            - /tmp/ray/session_latest/logs/**/*.*
+    raw_ray_metrics:
+        type: prometheus_scrape
+        endpoints:
+            - "${ANYSCALE_RAY_METRICS_ENDPOINT}"
+        instance_tag: ScrapeTarget
+        scrape_interval_secs: 15
+
+# These transforms add useful attributes to your log files. To use other environment variables,
+# see https://docs.anyscale.com/reference/environment-variables for all available options.
+transforms:
+    ray_logs:
+        type: remap
+        inputs: ["raw_ray_logs"]
+        source: |-
+            .cluster_id = "${ANYSCALE_CLUSTER_ID}"
+            .instance_id = "${ANYSCALE_INSTANCE_ID}"
+            .node_ip = "${ANYSCALE_NODE_IP}"
+    ray_metrics:
+        type: remap
+        inputs: ["raw_ray_metrics"]
+        source: |-
+            .tags.cluster_id = "${ANYSCALE_CLUSTER_ID}"
+            .tags.instance_id = "${ANYSCALE_INSTANCE_ID}"
+            .tags.node_ip = "${ANYSCALE_NODE_IP}"
+            .tags = compact(.tags, recursive: true)
+sinks:
+    gcp_logs:
+        encoding:
+            timestamp_format: rfc3339
+        inputs: ["ray_logs"]
+        log_id: gene.test.logs
+        project_id: dogfood-clouds
+        resource:
+            project_id: dogfood-clouds
+            type: global
+        type: gcp_stackdriver_logs

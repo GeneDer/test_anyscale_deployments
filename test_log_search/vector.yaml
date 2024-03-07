@@ -1,0 +1,84 @@
+sources:
+    raw_ray_logs:
+        type: file
+        fingerprint:
+            ignored_header_bytes: 0
+            strategy: device_and_inode
+        include:
+            - /tmp/ray/*/logs/**/job-driver-*.*
+            - /tmp/ray/*/logs/**/runtime_env_setup-*.*
+            - /tmp/ray/*/logs/**/worker-*.out
+            - /tmp/ray/*/logs/**/worker-*.err
+            - /tmp/ray/*/logs/**/serve/*.*
+        exclude:
+            # The session_latest directory is a symlink to an actual session directory,
+            # so we intentionally exclude it here so Vector doesn't ingest duplicates.
+            - /tmp/ray/session_latest/logs/**/*.*
+
+# These transforms add useful attributes to your log files. To use other environment variables,
+# see https://docs.anyscale.com/reference/environment-variables for all available options.
+transforms:
+    ray_logs:
+        type: filter
+        inputs:
+            - raw_ray_logs
+        condition:
+            type: vrl
+            source: |-
+                !match(string!(.message), r'^(:actor_name:|:task_name:|:job_id:|:task_attempt_start:|:task_attempt_end:)')
+    remap_json_ray_logs:
+        type: lua
+        inputs: ["ray_logs"]
+        hooks:
+            process: process
+        source: |-
+            function process(event, emit)
+              for line in io.lines(event.log.file) do 
+                if line:find("^:actor_name:") ~= nil then
+                  event.log.actor_name = string.gsub(line, ":actor_name:", "")
+                elseif line:find("^:task_name:") ~= nil then
+                  event.log.task_name = string.gsub(line, ":task_name:", "")
+                elseif line:find("^:job_id:") ~= nil then
+                  event.log.job_id = string.gsub(line, ":job_id:", "")
+                elseif line:find("^:task_attempt_start:") ~= nil then
+                  event.log.task_attempt_start = string.gsub(line, ":task_attempt_start:", "")
+                elseif line:find("^:task_attempt_end:") ~= nil then
+                  event.log.task_attempt_end = string.gsub(line, ":task_attempt_end:", "")
+                else
+                  break
+                end
+              end
+              emit(event)
+            end
+        version: "2"
+sinks:
+    loki_logs:
+        type: loki
+        inputs: [ "remap_json_ray_logs" ]
+        endpoint: "http://localhost:9481"
+        healthcheck:
+            enabled: false
+        encoding:
+            codec: json
+        compression: snappy
+        labels:
+            file: "{{ file }}"
+            source_type: "{{ source_type }}"
+            from_location: "workspace_test"
+            levelname: "{{ levelname }}"
+
+        tenant_id: "cld_kvedZWag2qA8i5BjxUevf5i7"
+#    cloudwatch_logs:
+#        region: us-west-2
+#        encoding:
+#            codec: json
+#        group_name: "/gene/test/logs"
+#        inputs: ["ray_logs"]
+#        # One of ANYSCALE_PRODJOB_ID / ANYSCALE_SERVICE_ID will be set for jobs / services.
+#        stream_name: "${ANYSCALE_PRODJOB_ID}${ANYSCALE_SERVICE_ID}/${ANYSCALE_SESSION_ID}"
+#        type: aws_cloudwatch_logs
+#    cloudwatch_metrics:
+#        region: us-west-2
+#        default_namespace: "/gene/test/logs"
+#        inputs: ["ray_metrics"]
+#        type: aws_cloudwatch_metrics

@@ -2,17 +2,17 @@ import logging
 from fastapi import FastAPI
 from ray import serve
 from starlette.requests import Request
-from ray.serve.autoscaling_policy import AutoscalingContext
+# from ray.serve.autoscaling_policy import AutoscalingContext
 import requests
 
 logger = logging.getLogger("ray.serve")
 
 
-def custom_scaling(context: AutoscalingContext):
-    # return 4
-    # raise Exception("custom_scaling")
-    # return requests.get("http://foobar.com").json()
-    return requests.get("http://localhost:8000/app_scale/getter").json()["replicas"]
+# def custom_scaling(context: AutoscalingContext):
+#     return 4
+#     # raise Exception("custom_scaling")
+#     # return requests.get("http://foobar.com").json()
+#     return requests.get("http://localhost:8000/app_scale/getter").json()["replicas"]
 
 
 @serve.deployment(
@@ -20,7 +20,7 @@ def custom_scaling(context: AutoscalingContext):
         "max_replicas": 10,
         # "policy": custom_scaling,
         # "policy": "deployment:custom_scaling",
-        "policy": "test_custom_scaling.deployment:custom_scaling",
+        # "policy": "test_custom_scaling.deployment:custom_scaling",
         # "policy": "ray.serve.autoscaling_policy:basic_autoscaling_policy",
         # "policy": "ray.serve.autoscaling_policy:cpu_utilization_autoscaling_policy",
         # "policy": "ray.serve.autoscaling_policy:latency_based_autoscaling_policy",

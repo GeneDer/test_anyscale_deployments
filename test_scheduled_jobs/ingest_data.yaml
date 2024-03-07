@@ -1,0 +1,11 @@
+name: "ingest_data"
+# entrypoint: "poetry install && poetry run python /mnt/shared_storage/travis/ingest_data.py"
+entrypoint: "python /mnt/shared_storage/genesu/ingest_data.py"
+max_retries: 0
+runtime_env:
+    # upload_path: "s3://anyscale-production-data-cld-zw9x9jvgemeyyv4ak863yuxqvl/org_3h23l61w98bumimcpx4y9jqn4e/cld_zw9x9jvgemeyyv4ak863yuxqvl/artifact_storage"
+    upload_path: "s3://anyscale-test-data-cld-i2w99rzq8b6lbjkke9y94vi5/org_7c1Kalm9WcX2bNIjW53GUT/cld_kvedZWag2qA8i5BjxUevf5i7/artifact_storage/genesu"
+    working_dir: "."
+# schedule:
+#   cron_expression: "*/3 * * * *"
+#   timezone: local

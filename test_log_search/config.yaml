@@ -1,0 +1,13 @@
+applications:
+  - name: app
+    route_prefix: /
+    import_path: deployment_demo:app
+    runtime_env:
+      env_vars:
+        RAY_SERVE_LOG_TO_STDERR: '0'
+  - name: app2
+    route_prefix: /app2
+    import_path: deployment_demo:app2
+    runtime_env:
+      env_vars:
+        RAY_SERVE_LOG_TO_STDERR: '0'

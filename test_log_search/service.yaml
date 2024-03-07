@@ -1,0 +1,15 @@
+# anyscale services rollout -f service.yaml
+name: "obs-logs"
+cluster_env: log-fix:1
+ray_serve_config:
+  applications:
+    - name: app
+      route_prefix: /
+      import_path: deployment:app
+      runtime_env:
+        env_vars:
+          RAY_SERVE_LOG_TO_STDERR: '0'
+      deployments:
+        - name: Counter
+          user_config:
+            count: 123

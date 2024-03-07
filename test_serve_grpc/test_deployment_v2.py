@@ -6,7 +6,7 @@ from PIL import Image
 from fastapi import FastAPI
 from io import BytesIO
 from ray import serve
-from ray.serve.handle import RayServeDeploymentHandle
+from ray.serve.handle import DeploymentHandle
 from starlette.requests import Request
 from torchvision import transforms
 from typing import Dict, Generator, List
@@ -60,7 +60,7 @@ class GrpcDeployment:
         print("grpc_context.details()", grpc_context.details(), type(grpc_context.details()))
         print("grpc_context.trailing_metadata()", grpc_context.trailing_metadata())
 
-        raise Exception("my exception!!!!!!!!!!")
+        # raise Exception("my exception!!!!!!!!!!")
         greeting = f"Hello {user_message.name} from {user_message.foo}"
         num_x2 = user_message.num * 2
         user_response = UserDefinedResponse(
@@ -141,8 +141,8 @@ g = GrpcDeployment.options(name="grpc-deployment").bind()
 class FruitMarket:
     def __init__(
         self,
-        _orange_stand: RayServeDeploymentHandle,
-        _apple_stand: RayServeDeploymentHandle,
+        _orange_stand: DeploymentHandle,
+        _apple_stand: DeploymentHandle,
     ):
         self.directory = {
             "ORANGE": _orange_stand,
@@ -202,8 +202,8 @@ g2 = FruitMarket.options(name="grpc-deployment-model-composition").bind(
 class ImageClassifier:
     def __init__(
         self,
-        _image_downloader: RayServeDeploymentHandle,
-        _data_preprocessor: RayServeDeploymentHandle,
+        _image_downloader: DeploymentHandle,
+        _data_preprocessor: DeploymentHandle,
     ):
         self._image_downloader = _image_downloader.options(use_new_handle_api=True)
         self._data_preprocessor = _data_preprocessor.options(use_new_handle_api=True)
