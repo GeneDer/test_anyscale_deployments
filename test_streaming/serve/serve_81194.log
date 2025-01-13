@@ -1,0 +1,6 @@
+INFO 2024-09-04 12:20:58,390 serve 81194 api.py:277 - Started Serve in namespace "serve".
+INFO 2024-09-04 12:20:58,392 serve 81194 handle.py:127 - Created DeploymentHandle 'wvl3jtxj' for Deployment(name='ChatServiceRay', app='default').
+INFO 2024-09-04 12:20:58,393 serve 81194 handle.py:127 - Created DeploymentHandle '2uqtlxpq' for Deployment(name='ChatServiceRay', app='default').
+INFO 2024-09-04 12:20:59,398 serve 81194 client.py:492 - Deployment 'ChatServiceRay:21twu0jy' is ready at `http://127.0.0.1:8000/`. component=serve deployment=ChatServiceRay
+INFO 2024-09-04 12:20:59,399 serve 81194 handle.py:127 - Created DeploymentHandle 'anxey76h' for Deployment(name='ChatServiceRay', app='default').
+INFO 2024-09-04 12:20:59,399 serve 81194 api.py:549 - Deployed app 'default' successfully.

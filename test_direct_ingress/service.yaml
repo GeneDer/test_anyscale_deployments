@@ -1,0 +1,20 @@
+#  anyscale service deploy -f service.yaml --image-uri geneanyscale/gene-test-anyscale:serve-direct-ingress-v5 --name multi-app
+applications:
+  - name: app1
+    route_prefix: /app1
+    import_path: deployment:build_app
+    runtime_env:
+      env_vars:
+        APP_NAME: "app1"
+  - name: app2
+    route_prefix: /app2
+    import_path: deployment:build_app
+    runtime_env:
+      env_vars:
+        APP_NAME: "app2"
+  - name: app3
+    route_prefix: /app3
+    import_path: deployment:build_app
+    runtime_env:
+      env_vars:
+        APP_NAME: "app3"

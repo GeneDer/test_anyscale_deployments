@@ -1,0 +1,12 @@
+applications:
+  - name: fake
+    route_prefix: /
+    import_path: fake:app
+    runtime_env:
+      container:
+        image: geneanyscale/gene-test-anyscale:import_issue__docker_2_10_0
+        worker_path: /home/ray/anaconda3/lib/python3.10/site-packages/ray/_private/workers/default_worker.py
+        run_options:
+          - '-e "PYTHONPATH=/serve_app"'
+#       env_vars:
+#         PYTHONPATH: "/serve_app"

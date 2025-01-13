@@ -1,0 +1,19 @@
+INFO 2024-08-21 15:20:20,649 serve 71905 api.py:277 - Started Serve in namespace "serve".
+INFO 2024-08-21 15:20:20,650 serve 71905 handle.py:127 - Created DeploymentHandle 'gblef75k' for Deployment(name='Streamer', app='default').
+INFO 2024-08-21 15:20:20,650 serve 71905 handle.py:127 - Created DeploymentHandle '86xkqq1z' for Deployment(name='Streamer', app='default').
+INFO 2024-08-21 15:20:20,650 serve 71905 handle.py:127 - Created DeploymentHandle 'db4np697' for Deployment(name='Caller', app='default').
+INFO 2024-08-21 15:20:20,650 serve 71905 handle.py:127 - Created DeploymentHandle 'cpgyso4o' for Deployment(name='Streamer', app='default').
+INFO 2024-08-21 15:20:20,650 serve 71905 handle.py:127 - Created DeploymentHandle 'x9yp1bli' for Deployment(name='Caller', app='default').
+INFO 2024-08-21 15:20:22,676 serve 71905 client.py:492 - Deployment 'Streamer:uqyu99hs' is ready. component=serve deployment=Streamer
+INFO 2024-08-21 15:20:22,676 serve 71905 client.py:492 - Deployment 'Caller:vc99sugq' is ready at `http://127.0.0.1:8000/`. component=serve deployment=Caller
+INFO 2024-08-21 15:20:22,677 serve 71905 handle.py:127 - Created DeploymentHandle 'a9iynbny' for Deployment(name='Caller', app='default').
+INFO 2024-08-21 15:20:22,677 serve 71905 api.py:549 - Deployed app 'default' successfully.
+INFO 2024-08-21 15:20:37,530 serve 71905 api.py:259 - Connecting to existing Serve app in namespace "serve". New http options will not be applied.
+INFO 2024-08-21 15:20:37,531 serve 71905 handle.py:127 - Created DeploymentHandle 'mxuganfp' for Deployment(name='Streamer', app='default').
+INFO 2024-08-21 15:20:37,532 serve 71905 handle.py:127 - Created DeploymentHandle '66zd5d6z' for Deployment(name='Streamer', app='default').
+INFO 2024-08-21 15:20:37,532 serve 71905 handle.py:127 - Created DeploymentHandle '1nz3lvko' for Deployment(name='Caller', app='default').
+INFO 2024-08-21 15:20:37,532 serve 71905 handle.py:127 - Created DeploymentHandle 'p60l16z1' for Deployment(name='Streamer', app='default').
+INFO 2024-08-21 15:20:37,532 serve 71905 handle.py:127 - Created DeploymentHandle 'fz51nvqt' for Deployment(name='Caller', app='default').
+INFO 2024-08-21 15:20:40,554 serve 71905 client.py:492 - Deployment 'Streamer:54gh4gqb' is ready. component=serve deployment=Streamer
+INFO 2024-08-21 15:20:40,555 serve 71905 client.py:492 - Deployment 'Caller:ysactncp' is ready at `http://127.0.0.1:8000/`. component=serve deployment=Caller
+INFO 2024-08-21 15:20:40,562 serve 71905 api.py:549 - Deployed app 'default' successfully.

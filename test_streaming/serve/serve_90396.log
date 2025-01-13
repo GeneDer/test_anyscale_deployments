@@ -1,0 +1,8 @@
+INFO 2024-09-04 12:36:10,430 serve 90396 api.py:277 - Started Serve in namespace "serve".
+INFO 2024-09-04 12:36:10,431 serve 90396 api.py:259 - Connecting to existing Serve app in namespace "serve". New http options will not be applied.
+INFO 2024-09-04 12:36:10,433 serve 90396 handle.py:127 - Created DeploymentHandle 'tra2ho4w' for Deployment(name='MyApp', app='default').
+INFO 2024-09-04 12:36:10,433 serve 90396 handle.py:127 - Created DeploymentHandle '6st1fxoc' for Deployment(name='MyApp', app='default').
+INFO 2024-09-04 12:36:11,445 serve 90396 client.py:492 - Deployment 'MyApp:agb7lpz6' is ready at `http://127.0.0.1:8000/`. component=serve deployment=MyApp
+INFO 2024-09-04 12:36:11,448 serve 90396 handle.py:127 - Created DeploymentHandle 'lsok4gmw' for Deployment(name='MyApp', app='default').
+INFO 2024-09-04 12:36:11,449 serve 90396 api.py:549 - Deployed app 'default' successfully.
+WARNING 2024-09-04 12:36:46,402 serve 90396 api.py:557 - Got KeyboardInterrupt, exiting...

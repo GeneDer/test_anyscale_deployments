@@ -1,3 +1,4 @@
+# curl -X GET -N localhost:8000?max=10
 import time
 from typing import Generator
 

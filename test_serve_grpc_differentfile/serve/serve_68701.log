@@ -1,0 +1,8 @@
+INFO 2024-09-06 15:32:12,572 serve 68701 api.py:259 - Connecting to existing Serve app in namespace "serve". New http options will not be applied.
+INFO 2024-09-06 15:32:12,573 serve 68701 api.py:259 - Connecting to existing Serve app in namespace "serve". New http options will not be applied.
+INFO 2024-09-06 15:32:12,574 serve 68701 handle.py:127 - Created DeploymentHandle 'no33nbph' for Deployment(name='GrpcDeployment', app='default').
+INFO 2024-09-06 15:32:12,574 serve 68701 handle.py:127 - Created DeploymentHandle 'rca75rqa' for Deployment(name='GrpcDeployment', app='default').
+INFO 2024-09-06 15:32:13,585 serve 68701 client.py:492 - Deployment 'GrpcDeployment:n35kqpap' is ready at `http://127.0.0.1:8000/`. component=serve deployment=GrpcDeployment
+INFO 2024-09-06 15:32:13,598 serve 68701 handle.py:127 - Created DeploymentHandle 'p1054dir' for Deployment(name='GrpcDeployment', app='default').
+INFO 2024-09-06 15:32:13,599 serve 68701 api.py:549 - Deployed app 'default' successfully.
+WARNING 2024-09-06 15:32:56,011 serve 68701 api.py:557 - Got KeyboardInterrupt, exiting...

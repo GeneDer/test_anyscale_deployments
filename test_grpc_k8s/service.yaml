@@ -1,0 +1,19 @@
+#  anyscale service deploy -f service.yaml
+#name: grpc-service-eks
+name: grpc-service-gke
+image_uri: geneanyscale/gene-test-anyscale:grpc-k8s-test  # Replace with your image
+#cloud: default_anyscale_eks_1_28_us_west_2_cloud  # Replace with your cloud name
+cloud: default_anyscale_gke_1_28_us_central1_cloud  # Replace with your cloud name
+
+grpc_options:
+  service_names:
+    # The prefix of the fully qualified gRPC service name in your .proto file.
+    - userdefinedprotos.UserDefinedService
+  grpc_servicer_functions:
+    - user_defined_protos_pb2_grpc.add_UserDefinedServiceServicer_to_server
+
+applications:
+  - name: grpc_app
+    route_prefix: /grpc_app
+    import_path: deployment:grpc_app
+    runtime_env: { }

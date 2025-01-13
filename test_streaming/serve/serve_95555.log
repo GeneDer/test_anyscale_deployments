@@ -1,0 +1,8 @@
+INFO 2024-09-04 12:44:59,854 serve 95555 api.py:277 - Started Serve in namespace "serve".
+INFO 2024-09-04 12:44:59,854 serve 95555 api.py:259 - Connecting to existing Serve app in namespace "serve". New http options will not be applied.
+INFO 2024-09-04 12:44:59,857 serve 95555 handle.py:127 - Created DeploymentHandle 'pej3m3c2' for Deployment(name='ChatServiceRay', app='default').
+INFO 2024-09-04 12:44:59,857 serve 95555 handle.py:127 - Created DeploymentHandle 'ihuu79bo' for Deployment(name='ChatServiceRay', app='default').
+INFO 2024-09-04 12:45:00,865 serve 95555 client.py:492 - Deployment 'ChatServiceRay:6drfv0vk' is ready at `http://127.0.0.1:8000/`. component=serve deployment=ChatServiceRay
+INFO 2024-09-04 12:45:00,868 serve 95555 handle.py:127 - Created DeploymentHandle '2ablnm2y' for Deployment(name='ChatServiceRay', app='default').
+INFO 2024-09-04 12:45:00,868 serve 95555 api.py:549 - Deployed app 'default' successfully.
+WARNING 2024-09-04 12:45:33,151 serve 95555 api.py:557 - Got KeyboardInterrupt, exiting...

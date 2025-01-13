@@ -1,0 +1,24 @@
+# docker build . -t geneanyscale/gene-test-anyscale:serve-direct-ingress-v3
+# docker run -it --rm -p 8265:8265 --shm-size=10.04gb geneanyscale/gene-test-anyscale:serve-direct-ingress bash
+# docker push geneanyscale/gene-test-anyscale:serve-direct-ingress-v3
+
+# Use Anyscale base image
+FROM anyscale/ray:2.37.0-py310
+
+WORKDIR /home/ray
+
+# Add working directory into Python path so any nodes can import them
+ENV PYTHONPATH=/home/ray
+
+RUN pip install -U torch torchvision locust
+
+# Download the wheel from S3, change the s3 path
+# aws s3 cp s3://bk-premerge-first-jawfish-artifacts/tmp/runtime/b0ee7c62/ray-3.0.0.dev0-cp310-cp310-manylinux2014_x86_64.whl .
+COPY ray-3.0.0.dev0-cp310-cp310-manylinux2014_x86_64.whl /home/ray/ray-3.0.0.dev0-cp310-cp310-manylinux2014_x86_64.whl
+RUN pip --no-cache-dir install /home/ray/ray-3.0.0.dev0-cp310-cp310-manylinux2014_x86_64.whl
+
+# Override runtime.
+ENV ANYSCALE_DISABLE_OPTIMIZED_RAY=true
+
+# Make autoscaling work (maybe).
+ENV RAY_SERVE_COLLECT_AUTOSCALING_METRICS_ON_HANDLE=0

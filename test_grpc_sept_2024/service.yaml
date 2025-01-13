@@ -1,0 +1,16 @@
+name: grpc-service-sept-2024-2
+image_uri: geneanyscale/gene-test-anyscale:grpc-gcp-test-2024  # Replace with your image
+cloud: anyscale_v2_default_cloud  # Replace with your cloud name
+
+grpc_options:
+  service_names:
+    # The prefix of the fully qualified gRPC service name in your .proto file.
+    - userdefinedprotos.UserDefinedService
+  grpc_servicer_functions:
+    - user_defined_protos_pb2_grpc.add_UserDefinedServiceServicer_to_server
+
+applications:
+  - name: grpc_app
+    route_prefix: /grpc_app
+    import_path: deployment:grpc_app
+    runtime_env: { }

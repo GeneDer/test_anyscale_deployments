@@ -1,0 +1,15 @@
+applications:
+  - name: whisper
+    import_path: whisper_example:entrypoint
+    route_prefix: /whisper
+    runtime_env:
+      container:
+        image: alice/whisper_image:latest
+        worker_path: /home/ray/anaconda3/lib/python3.8/site-packages/ray/_private/workers/default_worker.py
+  - name: resnet
+    import_path: resnet50_example:app
+    route_prefix: /resnet
+    runtime_env:
+      container:
+        image: alice/resnet_image:latest
+        worker_path: /home/ray/anaconda3/lib/python3.8/site-packages/ray/_private/workers/default_worker.py

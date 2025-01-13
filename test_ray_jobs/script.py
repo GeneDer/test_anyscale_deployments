@@ -1,3 +1,4 @@
+# ray job submit -- python script.py
 # script.py
 import ray
 

@@ -1,0 +1,8 @@
+INFO 2024-09-06 15:30:57,908 serve 67955 api.py:277 - Started Serve in namespace "serve".
+INFO 2024-09-06 15:30:57,908 serve 67955 api.py:259 - Connecting to existing Serve app in namespace "serve". New http options will not be applied.
+INFO 2024-09-06 15:30:57,910 serve 67955 handle.py:127 - Created DeploymentHandle 'a8nci7ac' for Deployment(name='GrpcDeployment', app='default').
+INFO 2024-09-06 15:30:57,910 serve 67955 handle.py:127 - Created DeploymentHandle 'luluh4xi' for Deployment(name='GrpcDeployment', app='default').
+INFO 2024-09-06 15:30:58,918 serve 67955 client.py:492 - Deployment 'GrpcDeployment:69zl2sb8' is ready at `http://127.0.0.1:8000/`. component=serve deployment=GrpcDeployment
+INFO 2024-09-06 15:30:58,919 serve 67955 handle.py:127 - Created DeploymentHandle '6nymri2i' for Deployment(name='GrpcDeployment', app='default').
+INFO 2024-09-06 15:30:58,919 serve 67955 api.py:549 - Deployed app 'default' successfully.
+WARNING 2024-09-06 15:31:38,847 serve 67955 api.py:557 - Got KeyboardInterrupt, exiting...

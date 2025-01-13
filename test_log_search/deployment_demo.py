@@ -1,11 +1,13 @@
 """
+RAY_SETUP_DEFAULT_LOGGER=1 RAY_SERVE_LOG_ENCODING=JSON serve run config.yaml
+
 serve run config.yaml
 curl localhost:8000
 curl localhost:8000
 curl localhost:8000
 curl localhost:8000?err=1
 
-serve deploy config.yaml --name obs-logs-$RANDOM
+serve deploy -f config.yaml --name obs-logs-$RANDOM
 curl -H 'Authorization: Bearer UEhQbJPL7346ycAx-EBpedErPYc2k67aou5SojZL8dA' https://obs-logs-15184-jey3f.cld-e41shsjiiyhyuvcw.s.anyscaleuserdata-staging.com/
 
 """
@@ -21,8 +23,15 @@ from torchvision import transforms
 from ray.serve.handle import DeploymentHandle
 from tqdm import tqdm
 import sys
+import ray
 
 logger = logging.getLogger(__file__)
+
+@ray.remote
+def foo():
+    logger.info('this is from the logger in a ray task!!!')
+    request_context = ray.serve.context._serve_request_context.get()
+    logger.info(request_context)
 
 
 @serve.deployment()
@@ -33,7 +42,7 @@ class Counter:
                 time.sleep(0.1)
                 pbar.update(10)
 
-        self.count = 12345
+        self.count = 12344
 
     def __call__(self, request):
         if request.query_params.get("err"):
@@ -46,6 +55,9 @@ class Counter:
         sys.stdout.write(f"This is from stdout directly!!! count: {self.count}\n")
         sys.stderr.write(f"This is from stderr directly!!! count: {self.count}\n")
         print(f"This\nis\nmulti-line\nlog\n!!! count: {self.count}")
+
+        obj_ref = foo.remote()
+        ray.get(obj_ref)
 
         return self.count, time.time()
 

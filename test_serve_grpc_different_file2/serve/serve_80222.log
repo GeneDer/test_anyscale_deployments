@@ -1,0 +1,8 @@
+INFO 2024-09-06 15:48:07,534 serve 80222 api.py:259 - Connecting to existing Serve app in namespace "serve". New http options will not be applied.
+INFO 2024-09-06 15:48:07,535 serve 80222 api.py:259 - Connecting to existing Serve app in namespace "serve". New http options will not be applied.
+INFO 2024-09-06 15:48:07,536 serve 80222 handle.py:127 - Created DeploymentHandle 'pxz7p0mi' for Deployment(name='GrpcDeployment', app='default').
+INFO 2024-09-06 15:48:07,536 serve 80222 handle.py:127 - Created DeploymentHandle 'nn8zvg89' for Deployment(name='GrpcDeployment', app='default').
+INFO 2024-09-06 15:48:08,548 serve 80222 client.py:492 - Deployment 'GrpcDeployment:pek1u45o' is ready at `http://127.0.0.1:8000/`. component=serve deployment=GrpcDeployment
+INFO 2024-09-06 15:48:08,554 serve 80222 handle.py:127 - Created DeploymentHandle 'b3uv5g2m' for Deployment(name='GrpcDeployment', app='default').
+INFO 2024-09-06 15:48:08,555 serve 80222 api.py:549 - Deployed app 'default' successfully.
+WARNING 2024-09-06 17:09:18,806 serve 80222 api.py:557 - Got KeyboardInterrupt, exiting...

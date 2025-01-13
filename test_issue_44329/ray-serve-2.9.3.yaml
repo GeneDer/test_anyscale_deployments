@@ -1,0 +1,80 @@
+apiVersion: ray.io/v1
+kind: RayService
+metadata:
+  name: ray-3-9-bug-repro
+spec:
+  serviceUnhealthySecondThreshold: 900
+  deploymentUnhealthySecondThreshold: 900
+  serveConfigV2: |
+    proxy_location: EveryNode
+    http_options:
+      host: 0.0.0.0
+      port: 8000
+    applications:
+    - name: test-app
+      import_path: app.deployment:test_deployment
+      route_prefix: /test-app
+      deployments:
+      - name: test-deployment
+        num_replicas: 1
+    - name: test-app-2
+      import_path: app2.deployment2:test_deployment_v2
+      route_prefix: /test-app-2
+      deployments:
+      - name: test-deployment-2
+        num_replicas: 1
+  rayClusterConfig:
+    rayVersion: 2.9.3
+    enableInTreeAutoscaling: true
+    headGroupSpec:
+      rayStartParams:
+        port: '6379'
+        dashboard-host: 0.0.0.0
+      template:
+        spec:
+          containers:
+            - name: ray-head
+              image: geneanyscale/gene-test-anyscale:import_issue_2_9_3
+              imagePullPolicy: Always
+              resources:
+                limits:
+                  cpu: 1
+                  memory: 1Gi
+                requests:
+                  cpu: 1
+                  memory: 1Gi
+              ports:
+                - containerPort: 6379
+                  name: gcs-server
+                - containerPort: 8265
+                  name: dashboard
+                - containerPort: 10001
+                  name: client
+                - containerPort: 8000
+                  name: serve
+    workerGroupSpecs:
+      - replicas: 1
+        minReplicas: 1
+        maxReplicas: 5
+        groupName: small-group
+        rayStartParams: {}
+        template:
+          spec:
+            containers:
+              - name: ray-worker
+                image: geneanyscale/gene-test-anyscale:import_issue_2_9_3
+                imagePullPolicy: Always
+                lifecycle:
+                  preStop:
+                    exec:
+                      command:
+                        - /bin/sh
+                        - -c
+                        - ray stop
+                resources:
+                  limits:
+                    cpu: 1
+                    memory: 1Gi
+                  requests:
+                    cpu: 1
+                    memory: 1Gi

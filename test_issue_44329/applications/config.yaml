@@ -1,0 +1,22 @@
+#  serve run config.yaml
+#
+#  curl http://localhost:8000/test-app --data-urlencode 'foobar'
+#  curl http://localhost:8000/test-app-2 --data-urlencode 'foobar'
+
+proxy_location: EveryNode
+http_options:
+  host: 0.0.0.0
+  port: 8000
+applications:
+  - name: test-app
+    import_path: app.deployment:test_deployment
+    route_prefix: /test-app
+    deployments:
+      - name: test-deployment
+        num_replicas: 1
+  - name: test-app-2
+    import_path: app2.deployment2:test_deployment_v2
+    route_prefix: /test-app-2
+    deployments:
+      - name: test-deployment-2
+        num_replicas: 1

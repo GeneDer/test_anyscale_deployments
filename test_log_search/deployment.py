@@ -23,6 +23,7 @@ class Counter:
         print("this\nis\nmutli-line\nlog\nin\n\init\n")
         sys.stdout.write("This is from stdout directly\n")
         sys.stderr.write("This is from stderr directly\n")
+        sys.stderr.write("")
         total = 10000
         with tqdm(total=total) as pbar:
             for i in range(total):

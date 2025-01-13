@@ -1,0 +1,8 @@
+INFO 2024-09-04 12:39:14,970 serve 92234 api.py:277 - Started Serve in namespace "serve".
+INFO 2024-09-04 12:39:14,970 serve 92234 api.py:259 - Connecting to existing Serve app in namespace "serve". New http options will not be applied.
+INFO 2024-09-04 12:39:14,973 serve 92234 handle.py:127 - Created DeploymentHandle '15oosrwf' for Deployment(name='ChatServiceRay', app='default').
+INFO 2024-09-04 12:39:14,973 serve 92234 handle.py:127 - Created DeploymentHandle 'd831fet3' for Deployment(name='ChatServiceRay', app='default').
+INFO 2024-09-04 12:39:15,984 serve 92234 client.py:492 - Deployment 'ChatServiceRay:grssjukf' is ready at `http://127.0.0.1:8000/`. component=serve deployment=ChatServiceRay
+INFO 2024-09-04 12:39:15,992 serve 92234 handle.py:127 - Created DeploymentHandle 'ibmk8s7d' for Deployment(name='ChatServiceRay', app='default').
+INFO 2024-09-04 12:39:15,992 serve 92234 api.py:549 - Deployed app 'default' successfully.
+WARNING 2024-09-04 12:40:49,933 serve 92234 api.py:557 - Got KeyboardInterrupt, exiting...

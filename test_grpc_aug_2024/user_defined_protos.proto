@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.ray.examples.user_defined_protos";
+option java_outer_classname = "UserDefinedProtos";
+
+package userdefinedprotos;
+
+message UserDefinedMessage {
+  string name = 1;
+}
+
+message UserDefinedResponse {
+  string greeting = 1;
+}
+
+service UserDefinedService {
+  rpc __call__(UserDefinedMessage) returns (UserDefinedResponse);
+}

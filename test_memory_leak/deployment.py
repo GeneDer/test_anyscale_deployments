@@ -2,6 +2,7 @@
 # while true; do curl localhost:8000; done
 from starlette.requests import Request
 from ray import serve
+import ray
 
 
 @serve.deployment()

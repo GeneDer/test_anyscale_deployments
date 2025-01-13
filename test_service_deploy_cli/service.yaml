@@ -1,0 +1,10 @@
+name: alex-service-test-rollout-jsp2
+
+compute_config: alex-simple-config
+
+applications:
+  - name: JasperML Inference
+    route_prefix: /
+    import_path: inference.app:server
+    runtime_env:
+      working_dir: .

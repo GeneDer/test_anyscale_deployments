@@ -1,0 +1,17 @@
+#  anyscale service deploy -f service.yaml
+name: grpc-service
+image_uri: geneanyscale/gene-test-anyscale:grpc-gcp-test
+#cloud: anyscale_v2_default_cloud
+cloud: anyscale_gcp_public_default_cloud_us_west_1
+
+grpc_options:
+  service_names:
+    - userdefinedprotos.UserDefinedService  # The name of the gRPC service in your .proto file.
+  grpc_servicer_functions:
+    - user_defined_protos_pb2_grpc.add_UserDefinedServiceServicer_to_server
+
+applications:
+  - name: grpc_app
+    route_prefix: /grpc_app
+    import_path: deployment:grpc_app
+    runtime_env: { }

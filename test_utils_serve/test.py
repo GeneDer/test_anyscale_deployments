@@ -1,12 +1,13 @@
+import asdf
 from ray import serve
-from utils import foo
+# from utils import foo
 
 
-@serve.deployment() 
+@serve.deployment()
 class A:
     def __call__(self, *args):
-        val = foo()
-        return val
+        # val = foo()
+        return "foo"
 
 
 def build_app(args):

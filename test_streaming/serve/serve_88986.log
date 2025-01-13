@@ -1,0 +1,8 @@
+INFO 2024-09-04 12:33:47,325 serve 88986 api.py:277 - Started Serve in namespace "serve".
+INFO 2024-09-04 12:33:47,326 serve 88986 api.py:259 - Connecting to existing Serve app in namespace "serve". New http options will not be applied.
+INFO 2024-09-04 12:33:47,327 serve 88986 handle.py:127 - Created DeploymentHandle 'nend9xcf' for Deployment(name='MyApp', app='default').
+INFO 2024-09-04 12:33:47,327 serve 88986 handle.py:127 - Created DeploymentHandle 'rz77rkgy' for Deployment(name='MyApp', app='default').
+INFO 2024-09-04 12:33:48,334 serve 88986 client.py:492 - Deployment 'MyApp:wkc8off4' is ready at `http://127.0.0.1:8000/`. component=serve deployment=MyApp
+INFO 2024-09-04 12:33:48,340 serve 88986 handle.py:127 - Created DeploymentHandle '56wzqajc' for Deployment(name='MyApp', app='default').
+INFO 2024-09-04 12:33:48,340 serve 88986 api.py:549 - Deployed app 'default' successfully.
+WARNING 2024-09-04 12:35:31,832 serve 88986 api.py:557 - Got KeyboardInterrupt, exiting...

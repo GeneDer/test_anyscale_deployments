@@ -6,7 +6,7 @@ http_options:
 
   port: 8000
 
-  request_timeout_s: 1
+  request_timeout_s: 2
 
 applications:
 

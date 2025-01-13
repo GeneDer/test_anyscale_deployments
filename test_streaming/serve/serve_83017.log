@@ -1,0 +1,3 @@
+INFO 2024-09-04 12:23:47,754 serve 83017 api.py:277 - Started Serve in namespace "serve".
+INFO 2024-09-04 12:23:47,755 serve 83017 handle.py:127 - Created DeploymentHandle '9rdhk2iu' for Deployment(name='ChatServiceRay', app='default').
+INFO 2024-09-04 12:23:47,755 serve 83017 handle.py:127 - Created DeploymentHandle '0e5w2wdh' for Deployment(name='ChatServiceRay', app='default').
