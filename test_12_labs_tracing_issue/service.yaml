@@ -1,0 +1,39 @@
+name: chaos-receiver-serve-scale-testing
+image_uri: 'anyscale/image/receiver-ray210-py310:1'
+compute_config: 'chaos-receiver-serve-scale-testing:2'
+cloud: anyscale_v2_default_cloud
+project: services-chaos-test
+query_auth_token_enabled: true
+ray_gcs_external_storage_config:
+  address: 'internal-testing.onvfjm.clustercfg.memorydb.us-west-2.amazonaws.com:6379'
+http_options:
+  request_timeout_s: -1
+  keep_alive_timeout_s: 400
+applications:
+  - name: default
+    deployments:
+      - name: Receiver
+        num_replicas: 3
+        ray_actor_options:
+          num_cpus: 0
+          resources:
+            alpha_singleton: 1
+      - name: NodeKiller
+        num_replicas: 1
+        ray_actor_options:
+          num_cpus: 0
+          resources:
+            node_singleton: 1
+      - name: DiskLeaker
+        user_config:
+          num_GB: 10
+        num_replicas: 1
+        ray_actor_options:
+          num_cpus: 0
+          resources:
+            leak_singleton: 1
+    import_path: 'chaos_test.receiver:alpha'
+    runtime_env:
+      working_dir: >-
+        https://github.com/ray-project/serve_workloads/archive/c3e6b99060fdc16870af59f2ebfa7601d3ccb49d.zip
+    route_prefix: /
