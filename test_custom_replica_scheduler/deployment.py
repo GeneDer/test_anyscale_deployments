@@ -10,7 +10,7 @@ from test_custom_replica_scheduler.my_custom_schedulers import AllReplicaSchedul
 
 @serve.deployment(
     replica_scheduler=AllReplicaScheduler,
-    # replica_scheduler="my_custom_schedulers:AllReplicaScheduler",
+    # replica_scheduler="test_custom_replica_scheduler.my_custom_schedulers:AllReplicaScheduler",
     num_replicas=10,
 )
 class App1:
@@ -27,7 +27,7 @@ def _time_ms() -> int:
 
 
 @serve.deployment(
-    replica_scheduler="my_custom_schedulers:ThroughputAwareReplicaScheduler",
+    replica_scheduler="test_custom_replica_scheduler.my_custom_schedulers:ThroughputAwareReplicaScheduler",
     num_replicas=3,
 )
 class App2:
