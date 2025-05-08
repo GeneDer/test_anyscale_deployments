@@ -5,7 +5,7 @@ from ray.serve.context import _get_global_client, _get_internal_replica_context
 from ray.serve.replica_scheduler import ReplicaID, ReplicaSchedulingInfo
 from typing import Dict
 
-from my_custom_schedulers import AllReplicaScheduler
+from test_custom_replica_scheduler.my_custom_schedulers import AllReplicaScheduler
 
 
 @serve.deployment(
